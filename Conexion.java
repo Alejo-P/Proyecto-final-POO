@@ -21,9 +21,9 @@ public class Conexion {
             resultado = sentencia.executeQuery("SELECT * FROM Usuarios");
             while (resultado.next()) {
                 String nombre = resultado.getString("Usuario");
-                String contraseña = resultado.getString("Contrasena");
+                String contrasenia = resultado.getString("Contrasena");
                 String TipoUsuario = resultado.getString("Tipo usuario");
-                if (nombre.equals(user) && contraseña.equals(contraseña) && TipoUsuario.equals(tipoUsuario)) {
+                if (nombre.equals(user) && contrasenia.equals(password) && TipoUsuario.equals(tipoUsuario)) {
                     acceso = true;
                     break;
                 }
