@@ -12,6 +12,7 @@ public class LOGIN {
     private JButton ingresarButton;
     private JButton borrarButton;
     private JButton salirButton;
+    private Conexion BDD;
 
     public LOGIN() {
         JButton botonBorrar = new JButton("Borrar");
@@ -28,6 +29,18 @@ public class LOGIN {
                 //muestra en mensaje al momento de salir
                 JOptionPane.showMessageDialog(null, "Gracias por usar este sistema");
                 main.frame.dispose();
+            }
+        });
+        ingresarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BDD = new Conexion("root","2004", "jdbc:mysql://localhost:3306/base_poo");
+                if (BDD.getCredenciales(textField1.getText(), new String (passwordField1.getPassword()), comboBox1.getSelectedItem().toString())){
+                    JOptionPane.showMessageDialog(null, "Bienvenido de nuevo");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+                }
             }
         });
     }
