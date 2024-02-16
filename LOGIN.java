@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class InicioCajero {
+public class LOGIN {
     JPanel Inicio_Cajero;
     private JTextField textField1;
     private JComboBox comboBox1;
@@ -13,7 +13,7 @@ public class InicioCajero {
     private JButton borrarButton;
     private JButton salirButton;
 
-    public InicioCajero() {
+    public LOGIN() {
         JButton botonBorrar = new JButton("Borrar");
         borrarButton.addActionListener(new ActionListener() {
             @Override
