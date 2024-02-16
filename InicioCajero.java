@@ -1,3 +1,5 @@
+import com.sun.tools.javac.Main;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +11,7 @@ public class InicioCajero {
     private JPasswordField passwordField1;
     private JButton ingresarButton;
     private JButton borrarButton;
+    private JButton salirButton;
 
     public InicioCajero() {
         JButton botonBorrar = new JButton("Borrar");
@@ -16,6 +19,15 @@ public class InicioCajero {
             @Override
             public void actionPerformed(ActionEvent e) {
                 borrarCampos();
+            }
+        });
+        salirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //boton que permite cerrar el programa
+                //muestra en mensaje al momento de salir
+                JOptionPane.showMessageDialog(null, "Gracias por usar este sistema");
+                main.frame.dispose();
             }
         });
     }
@@ -33,8 +45,6 @@ public class InicioCajero {
 
 
         }
-
-
 
     }
 }
