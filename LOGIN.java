@@ -14,7 +14,7 @@ public class LOGIN {
     private JButton borrarButton;
     private JButton salirButton;
     private Conexion BDD;
-    // Cariable para capturar el nombre del ultimo campo con foco
+    // Variable para capturar el nombre del ultimo campo con foco
     private String CampoConFoco = "";
 
     public LOGIN() {
