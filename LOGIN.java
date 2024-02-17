@@ -2,9 +2,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
-
-
 public class LOGIN {
     JPanel Inicio_Cajero;
     private JTextField textField1;
@@ -37,23 +34,15 @@ public class LOGIN {
             public void actionPerformed(ActionEvent e) {
                 BDD = new Conexion("root","123456", "jdbc:mysql://localhost:3306/base_poo");
                 if (BDD.getCredenciales(textField1.getText(), new String (passwordField1.getPassword()), comboBox1.getSelectedItem().toString())){
-                    JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
-
-                    JFrame pantallaCajero=new JFrame("Bienvenido");
-                    pantallaCajero.setContentPane(new  PantallaCajero().PantCaj);
-                    pantallaCajero.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    pantallaCajero.pack();
-                    pantallaCajero.setVisible(true);
-
-
+                    JOptionPane.showMessageDialog(null, "Bienvenido de nuevo");
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
                 }
             }
         });
-
     }
+
     private void borrarCampos(){
         String usuarioTexto=textField1.getText();
         String contraseñaTexto=new String(passwordField1.getPassword());
@@ -69,9 +58,4 @@ public class LOGIN {
         }
 
     }
-
-
-
-
-
 }
