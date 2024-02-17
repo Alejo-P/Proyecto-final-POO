@@ -35,7 +35,7 @@ public class main {
         });
         //------------------------------------------------------
 
-        //hace que la pantalla aparesca en el centro
+        //hace que la pantalla apareca en el centro
         frame.setLocationRelativeTo(null);
         frame.pack();
         frame.setVisible(true);
