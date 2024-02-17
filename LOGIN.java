@@ -87,7 +87,7 @@ public class LOGIN {
         ingresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                BDD = new Conexion("root","123456", "jdbc:mysql://localhost:3306/base_poo");
+                BDD = new Conexion("JAVA","123456", "jdbc:mysql://localhost:3306/base_poo");
                 if (BDD.getCredenciales(textField1.getText(), new String (passwordField1.getPassword()), comboBox1.getSelectedItem().toString())){
                     JOptionPane.showMessageDialog(null, "Bienvenido de nuevo");
                 }
