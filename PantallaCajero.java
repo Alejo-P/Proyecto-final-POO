@@ -3,7 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PantallaCajero {
-    JPanel PantCaj;
+    JPanel panel_cajero;
     private JComboBox comboBox1;
     private JButton salirButton;
     private JButton enterButton;
@@ -12,7 +12,7 @@ public class PantallaCajero {
         salirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame=(JFrame) SwingUtilities.getWindowAncestor(PantallaCajero.this.PantCaj);
+                JFrame frame=(JFrame) SwingUtilities.getWindowAncestor(PantallaCajero.this.panel_cajero);
                 frame.dispose();
                 JOptionPane.showMessageDialog(null,"Haz salido del sistema");
 

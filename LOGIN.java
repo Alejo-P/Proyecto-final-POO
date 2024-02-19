@@ -87,18 +87,22 @@ public class LOGIN {
             @Override
             public void actionPerformed(ActionEvent e) {
                 BDD = new Conexion("JAVA","123456", "jdbc:mysql://localhost:3306/base_poo");
+
                 if (BDD.getCredenciales(textField1.getText(), new String (passwordField1.getPassword()), comboBox1.getSelectedItem().toString())){
                     JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
 
-                    JFrame pantallaCajero=new JFrame("Bienvenido");
-                    pantallaCajero.setContentPane(new  PantallaCajero().PantCaj);
+                    JFrame pantallaCajero=new JFrame("Cajero");
+                    pantallaCajero.setContentPane(new  PantallaCajero().panel_cajero);
                     pantallaCajero.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     pantallaCajero.pack();
                     pantallaCajero.setVisible(true);
+                    main.frame.dispose();
+
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
                 }
+
             }
         });
     }
