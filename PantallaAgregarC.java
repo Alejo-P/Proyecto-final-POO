@@ -1,5 +1,3 @@
-package JDBC;
-
 import javax.swing.*;
 
 public class PantallaAgregarC {
