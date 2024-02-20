@@ -27,7 +27,19 @@ public class PantallaAdmin {
                 stock.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 stock.setVisible(true);
                 stock.pack();
-                stock.dispose();
+
+                JFrame cajeros=new JFrame("Elija el cajero a su eleccion");
+                cajeros.setContentPane(new PantallaVendedores().Pantalla_Num_Cajero);
+                cajeros.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                cajeros.setVisible(true);
+                cajeros.pack();
+
+                JFrame agregarC=new JFrame("Cajero nuevo");
+                agregarC.setContentPane(new PantallaAgregarC().nuevo_cajero);
+                agregarC.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                agregarC.setVisible(true);
+                agregarC.pack();
+
             }
         });
     }

@@ -5,4 +5,5 @@ public class PantallaAgregarC {
     private JPasswordField passwordField1;
     private JPasswordField passwordField2;
     private JButton agregarButton;
+     JPanel nuevo_cajero;
 }
