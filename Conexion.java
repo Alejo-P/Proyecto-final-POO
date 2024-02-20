@@ -7,6 +7,7 @@ public class Conexion {
     private Connection conexion;
     private Statement sentencia;
     private ResultSet resultado;
+    private String Tipo_Usuario;
     public Conexion(String usuario, String contraseña, String url) {
         try {
             conexion = DriverManager.getConnection(url, usuario, contraseña);
@@ -24,6 +25,7 @@ public class Conexion {
                 String contrasenia = resultado.getString("Contrasena");
                 String TipoUsuario = resultado.getString("Tipo usuario");
                 if (nombre.equals(user) && contrasenia.equals(password) && TipoUsuario.equals(tipoUsuario)) {
+                    Tipo_Usuario = tipoUsuario;
                     acceso = true;
                     break;
                 }
@@ -32,5 +34,8 @@ public class Conexion {
             e.printStackTrace();
         }
         return acceso;
+    }
+    public String getTipoUsuario() {
+        return Tipo_Usuario;
     }
 }

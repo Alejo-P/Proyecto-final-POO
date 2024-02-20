@@ -90,13 +90,24 @@ public class LOGIN {
 
                 if (BDD.getCredenciales(textField1.getText(), new String (passwordField1.getPassword()), comboBox1.getSelectedItem().toString())){
                     JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
+                    if (BDD.getTipoUsuario().equals("Cajero"))
+                    {
+                        JFrame pantallaCajero=new JFrame("Cajero");
+                        pantallaCajero.setContentPane(new PantallaCajero().panel_cajero);
+                        pantallaCajero.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        pantallaCajero.pack();
+                        pantallaCajero.setVisible(true);
+                        main.frame.dispose();
+                    }
+                    else{
+                        JFrame pantallaAdministrador=new JFrame("Administrador");
+                        //pantallaAdministrador.setContentPane(new PantallaAdministrador().panel_administrador);
+                        pantallaAdministrador.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        pantallaAdministrador.pack();
+                        pantallaAdministrador.setVisible(true);
+                        main.frame.dispose();
+                    }
 
-                    JFrame pantallaCajero=new JFrame("Cajero");
-                    pantallaCajero.setContentPane(new  PantallaCajero().panel_cajero);
-                    pantallaCajero.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    pantallaCajero.pack();
-                    pantallaCajero.setVisible(true);
-                    main.frame.dispose();
 
                 }
                 else {
