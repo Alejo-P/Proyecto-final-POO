@@ -15,6 +15,7 @@ public class LOGIN {
     private Conexion BDD;
     // Variable para guardar el nombre del campo con el foco
     private String CampoConFoco = "";
+    static JFrame frame_2=new JFrame();
 
     public LOGIN() {
         JButton botonBorrar = new JButton("Borrar");
@@ -92,28 +93,24 @@ public class LOGIN {
                     JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
                     if (BDD.getTipoUsuario().equals("Cajero"))
                     {
-                        JFrame pantallaCajero=new JFrame("Cajero");
-                        pantallaCajero.setContentPane(new Pantalla_Cajero().PCajero);
-                        pantallaCajero.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        pantallaCajero.pack();
-                        pantallaCajero.setVisible(true);
+                        frame_2.setContentPane(new Pantalla_Cajero().panel_cajero);
+                        frame_2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        frame_2.pack();
+                        frame_2.setVisible(true);
                         main.frame.dispose();
                     }
                     else{
-                        JFrame pantallaAdministrador=new JFrame("Administrador");
-                        pantallaAdministrador.setContentPane(new PantallaAdmin().panel_admin);
-                        pantallaAdministrador.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        pantallaAdministrador.pack();
-                        pantallaAdministrador.setVisible(true);
+                        //JFrame pantallaAdministrador=new JFrame("Administrador");
+                        frame_2.setContentPane(new PantallaAdmin().panel_admin);
+                        frame_2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        frame_2.pack();
+                        frame_2.setVisible(true);
                         main.frame.dispose();
                     }
-
-
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
                 }
-
             }
         });
     }

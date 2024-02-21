@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 
 public class main {
     private static Point initialClick;
-    static JFrame frame = new JFrame("Inicio Cajero");
+    static JFrame frame = new JFrame();
 
     public static void main(String[] args) {
         frame.setContentPane(new LOGIN().Inicio_Cajero);
