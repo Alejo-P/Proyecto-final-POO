@@ -1,7 +1,10 @@
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Pantalla_Cajero {
-    private JPanel PCajero;
+    JPanel PCajero;
     private JTabbedPane Panel1;
     private JTextField TXF1;
     private JTextField TXF2;
@@ -29,4 +32,18 @@ public class Pantalla_Cajero {
     private JTable table3;
     private JButton actualizarButton;
     private JButton eliminarButton;
+    private JButton CANCELARCOMPRAButton;
+    private Component panel_cajero;
+
+    public Pantalla_Cajero() {
+        Boton4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame=(JFrame) SwingUtilities.getWindowAncestor(Pantalla_Cajero.this.panel_cajero);
+                frame.dispose();
+                JOptionPane.showMessageDialog(null,"Haz salido del sistema");
+            }
+        });
+
+    }
 }

@@ -93,7 +93,7 @@ public class LOGIN {
                     if (BDD.getTipoUsuario().equals("Cajero"))
                     {
                         JFrame pantallaCajero=new JFrame("Cajero");
-                        pantallaCajero.setContentPane(new PantallaCajero().panel_cajero);
+                        pantallaCajero.setContentPane(new Pantalla_Cajero().PCajero);
                         pantallaCajero.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         pantallaCajero.pack();
                         pantallaCajero.setVisible(true);

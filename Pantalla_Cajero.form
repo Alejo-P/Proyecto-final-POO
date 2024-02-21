@@ -3,29 +3,32 @@
   <grid id="27dc6" binding="PCajero" layout-manager="GridLayoutManager" row-count="9" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="628" height="809"/>
+      <xy x="20" y="20" width="628" height="815"/>
     </constraints>
     <properties>
       <background color="-16777216"/>
-      <preferredSize width="530" height="600"/>
+      <preferredSize width="530" height="630"/>
     </properties>
     <border type="none"/>
     <children>
       <tabbedpane id="df5a7" binding="Panel1">
         <constraints>
           <grid row="5" column="1" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="200" height="200"/>
+            <preferred-size width="250" height="300"/>
           </grid>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="8e510" layout-manager="GridLayoutManager" row-count="14" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="8e510" layout-manager="GridLayoutManager" row-count="16" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="Realizar Compra"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-394241"/>
+              <preferredSize width="721" height="890"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="4f296" class="javax.swing.JLabel">
@@ -95,11 +98,6 @@
               <vspacer id="fbab5">
                 <constraints>
                   <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </vspacer>
-              <vspacer id="62287">
-                <constraints>
-                  <grid row="13" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                 </constraints>
               </vspacer>
               <component id="53d40" class="javax.swing.JLabel">
@@ -218,6 +216,24 @@
                   </component>
                 </children>
               </scrollpane>
+              <component id="853c5" class="javax.swing.JButton" binding="CANCELARCOMPRAButton" default-binding="true">
+                <constraints>
+                  <grid row="15" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="CANCELAR COMPRA"/>
+                </properties>
+              </component>
+              <vspacer id="a8443">
+                <constraints>
+                  <grid row="13" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <vspacer id="faa31">
+                <constraints>
+                  <grid row="14" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
             </children>
           </grid>
           <grid id="67aee" layout-manager="GridLayoutManager" row-count="7" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -351,6 +367,14 @@
                       <text value="ID-Producto"/>
                     </properties>
                   </component>
+                  <component id="2e942" class="javax.swing.JButton" binding="buscarButton1" default-binding="true">
+                    <constraints>
+                      <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Buscar"/>
+                    </properties>
+                  </component>
                   <component id="b602d" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -393,14 +417,6 @@
                       <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </vspacer>
-                  <component id="2e942" class="javax.swing.JButton" binding="buscarButton1" default-binding="true">
-                    <constraints>
-                      <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Buscar"/>
-                    </properties>
-                  </component>
                 </children>
               </grid>
             </children>
