@@ -25,6 +25,7 @@ public class PantallaAdmin {
                 String opcionSeleccionada = (String) comboboxOpciones.getSelectedItem();
 
                 switch (comboboxOpciones) {
+                    //
                     case productosStock ignored:
                         JFrame stock = new JFrame("Productos en Stock");
                         stock.setContentPane(new productosStock().productosStock);
