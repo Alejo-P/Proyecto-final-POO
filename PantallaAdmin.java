@@ -6,13 +6,13 @@ public class PantallaAdmin {
     JComboBox<String> comboboxOpciones;
     private JButton salirButton;
     private JButton enterButton;
-    public JPanel panel_admin;
+    private JPanel panel_admini;
     public PantallaAdmin(){
 
         salirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame=(JFrame) SwingUtilities.getWindowAncestor(PantallaAdmin.this.panel_admin);
+                JFrame frame=(JFrame) SwingUtilities.getWindowAncestor(PantallaAdmin.this.panel_admini);
                 frame.dispose();
                 JOptionPane.showMessageDialog(null,"Haz salido del sistema");
 

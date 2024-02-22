@@ -101,7 +101,7 @@ public class LOGIN {
                     }
                     else{
                         //JFrame pantallaAdministrador=new JFrame("Administrador");
-                        frame_2.setContentPane(new PantallaAdmin().panel_admin);
+                        frame_2.setContentPane(new Patalla_Admin().pantalla);
                         frame_2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         frame_2.pack();
                         frame_2.setVisible(true);
