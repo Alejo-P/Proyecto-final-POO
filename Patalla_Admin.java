@@ -23,8 +23,8 @@ public class Patalla_Admin {
     private JTextField textField5;
 
 
-    public Patalla_Admin() {
-            comprobarButton.addActionListener(new ActionListener() {
+    /*public Patalla_Admin() {
+            /*comprobarButton.addActionListener(new ActionListener() {
                 @Override
                 /*public void actionPerformed(ActionEvent e) {
                     String opcionSeleccionada = (String) comboBox1.getSelectedItem();
@@ -64,6 +64,6 @@ public class Patalla_Admin {
                             break;
                     }
                 }*/
-            });
-        }
+            //});
+        //}
     }
