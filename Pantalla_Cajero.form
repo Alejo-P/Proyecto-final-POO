@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="panel_cajero" layout-manager="GridLayoutManager" row-count="9" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="628" height="815"/>
+      <xy x="20" y="20" width="628" height="824"/>
     </constraints>
     <properties>
       <background color="-16777216"/>
@@ -20,7 +20,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="8e510" layout-manager="GridLayoutManager" row-count="16" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="8e510" layout-manager="GridLayoutManager" row-count="15" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="Realizar Compra"/>
@@ -62,30 +62,6 @@
                   </grid>
                 </constraints>
                 <properties/>
-              </component>
-              <component id="b4fb5" class="javax.swing.JButton" binding="Boton1">
-                <constraints>
-                  <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Eliminar"/>
-                </properties>
-              </component>
-              <component id="aa154" class="javax.swing.JButton" binding="boton_confirmacion">
-                <constraints>
-                  <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Confirmar Compra"/>
-                </properties>
-              </component>
-              <component id="93db1" class="javax.swing.JButton" binding="Boton3">
-                <constraints>
-                  <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Imprimir Factura"/>
-                </properties>
               </component>
               <component id="b164e" class="javax.swing.JLabel">
                 <constraints>
@@ -219,14 +195,6 @@
                   </component>
                 </children>
               </scrollpane>
-              <component id="853c5" class="javax.swing.JButton" binding="CANCELARCOMPRAButton" default-binding="true">
-                <constraints>
-                  <grid row="15" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="CANCELAR COMPRA"/>
-                </properties>
-              </component>
               <vspacer id="a8443">
                 <constraints>
                   <grid row="13" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
@@ -237,6 +205,30 @@
                   <grid row="14" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                 </constraints>
               </vspacer>
+              <component id="aa154" class="javax.swing.JButton" binding="boton_confirmacion">
+                <constraints>
+                  <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Confirmar Compra"/>
+                </properties>
+              </component>
+              <component id="853c5" class="javax.swing.JButton" binding="CANCELARCOMPRAButton" default-binding="true">
+                <constraints>
+                  <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="CANCELAR COMPRA"/>
+                </properties>
+              </component>
+              <component id="93db1" class="javax.swing.JButton" binding="Boton3">
+                <constraints>
+                  <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Imprimir Factura"/>
+                </properties>
+              </component>
             </children>
           </grid>
           <grid id="67aee" layout-manager="GridLayoutManager" row-count="7" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

@@ -7,7 +7,6 @@ public class Pantalla_Cajero {
     private JTextField ingreso_cedula;
     private JTextField ingreso_nombre_apellido;
     private JTextField ingreso_valor_a_pagar;
-    private JButton Boton1;
     private JButton boton_confirmacion;
     private JButton Boton3;
     private JButton boton_cerrar_sesion;
@@ -48,6 +47,10 @@ public class Pantalla_Cajero {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                //ESTA PARTE DEL CODIGO TOMA LOS DATOS Y LOS ALMACENA EN VARIABLES
+                //TAMBIEN ESTA VALIDADOS
+                //EL TRY-CATCH MUESTRA UN MENSAJE CUANDO EL USARIO INGRESA UN VALOR DIFERENTE AL ESPERADO
+                // ----> EJ. INGRESE PRECIO (EL USUARIO INGRESA UN PALABRA)
 
                 try {
 
@@ -98,11 +101,33 @@ public class Pantalla_Cajero {
         boton_cerrar_sesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //CIERRA EL LA PANTALLA
                 JOptionPane.showMessageDialog(null,"Adios!!");
                 LOGIN.frame_2.dispose();
 
             }
         });
 
+        CANCELARCOMPRAButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                //ESTA PARTE DEL CODIGO CANCELA LA COMPRA
+                //LIMPIA LOS CAMPOS DE TEXTO QUE FUERO LLENADOS PREVIAMENTE
+
+                String valor_combobox="Seleccione el producto...";
+
+                ingreso_cedula.setText("");
+                ingreso_nombre_apellido.setText("");
+                ingreso_direccion.setText("");
+                ingreso_telefono.setText("");
+                ingreso_cantidad.setValue(0);
+                ingreso_producto.setSelectedItem(valor_combobox);
+                ingreso_valor_a_pagar.setText("");
+                JOptionPane.showMessageDialog(null, "Compra CANCELADA");
+
+            }
+        });
     }
 }

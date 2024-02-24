@@ -3,7 +3,10 @@ import java.io.IOException;
 
 public class FACTURA {
 
-    String factura_base="factura.txt";
+    String factura_base;
 
+    public void hola(){
+        System.out.println("a");
+    }
 
 }
