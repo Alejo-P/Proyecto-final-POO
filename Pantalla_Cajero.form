@@ -466,7 +466,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <editable value="false"/>
+        </properties>
       </component>
       <component id="b3ca4" class="javax.swing.JLabel">
         <constraints>
@@ -483,7 +485,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <editable value="false"/>
+        </properties>
       </component>
       <component id="3e74e" class="javax.swing.JLabel">
         <constraints>

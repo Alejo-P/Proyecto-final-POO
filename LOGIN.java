@@ -93,7 +93,7 @@ public class LOGIN {
                     JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
                     if (BDD.getTipoUsuario().equals("Cajero"))
                     {
-                        frame_2.setContentPane(new Pantalla_Cajero().panel_cajero);
+                        frame_2.setContentPane(new Pantalla_Cajero(BDD, textField1.getText()).panel_cajero);
                         frame_2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         frame_2.pack();
                         frame_2.setVisible(true);

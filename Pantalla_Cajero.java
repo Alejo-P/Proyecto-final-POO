@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class Pantalla_Cajero {
     JPanel panel_cajero;
@@ -7,6 +9,7 @@ public class Pantalla_Cajero {
     private JTextField ingreso_cedula;
     private JTextField ingreso_nombre_apellido;
     private JTextField ingreso_valor_a_pagar;
+    private JButton Boton1;
     private JButton boton_confirmacion;
     private JButton Boton3;
     private JButton boton_cerrar_sesion;
@@ -30,9 +33,23 @@ public class Pantalla_Cajero {
     private JButton actualizarButton;
     private JButton eliminarButton;
     private JButton CANCELARCOMPRAButton;
+    private Conexion conexion;
 
 
-    public Pantalla_Cajero() {
+    public Pantalla_Cajero(Conexion info, String usuario) {
+        this.conexion = info;
+        String query = "select codigo_unico, usuario from usuarios WHERE usuario='%s'".formatted(usuario);
+        ResultSet informacion=conexion.Consulta(query);
+        try {
+            while (informacion.next()){
+                ingreso_codigo.setText(informacion.getString("codigo_unico"));
+                ingreso_vendedor.setText(informacion.getString("usuario"));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
         /*boton_cerrar_sesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -46,14 +63,11 @@ public class Pantalla_Cajero {
         boton_confirmacion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 //ESTA PARTE DEL CODIGO TOMA LOS DATOS Y LOS ALMACENA EN VARIABLES
                 //TAMBIEN ESTA VALIDADOS
                 //EL TRY-CATCH MUESTRA UN MENSAJE CUANDO EL USARIO INGRESA UN VALOR DIFERENTE AL ESPERADO
                 // ----> EJ. INGRESE PRECIO (EL USUARIO INGRESA UN PALABRA)
-
                 try {
-
                     String codigo_vendedor=ingreso_codigo.getText();
                     String nombre_vendedor=ingreso_vendedor.getText();
                     String cedula=ingreso_cedula.getText();
@@ -101,14 +115,11 @@ public class Pantalla_Cajero {
         boton_cerrar_sesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                //CIERRA EL LA PANTALLA
                 JOptionPane.showMessageDialog(null,"Adios!!");
                 LOGIN.frame_2.dispose();
 
             }
         });
-
         CANCELARCOMPRAButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

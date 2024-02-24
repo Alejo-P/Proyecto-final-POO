@@ -11,14 +11,23 @@ public class Conexion {
     public Conexion(String usuario, String contraseña, String url) {
         try {
             conexion = DriverManager.getConnection(url, usuario, contraseña);
+            sentencia = conexion.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+    public ResultSet Consulta(String consulta) {
+        try {
+            resultado = sentencia.executeQuery(consulta);
+            return resultado;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
     public boolean getCredenciales(String user, String password, String tipoUsuario) {
         boolean acceso = false;
         try {
-            sentencia = conexion.createStatement();
             resultado = sentencia.executeQuery("SELECT * FROM Usuarios");
             while (resultado.next()) {
                 String nombre = resultado.getString("Usuario");
