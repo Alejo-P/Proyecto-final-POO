@@ -129,5 +129,26 @@ public class Pantalla_Cajero {
 
             }
         });
+        Boton3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String codigo_vendedor=ingreso_codigo.getText();
+                String nombre_vendedor=ingreso_vendedor.getText();
+                String cedula=ingreso_cedula.getText();
+                String nombre_apellido=ingreso_nombre_apellido.getText();
+                String direccion=ingreso_direccion.getText();
+                String telefono=ingreso_telefono.getText();
+                int cantidad=Integer.parseInt(String.valueOf(ingreso_cantidad.getValue()));
+                String producto = String.valueOf(ingreso_producto.getSelectedItem());
+                double valor_a_pagar= Double.parseDouble(ingreso_valor_a_pagar.getText());
+
+                if (cedula.isEmpty()||nombre_apellido.isEmpty()||direccion.isEmpty()||telefono.isEmpty()
+                        ||valor_a_pagar<=0||producto=="Seleccione el producto..."){
+
+
+                }
+            }
+        });
     }
 }
