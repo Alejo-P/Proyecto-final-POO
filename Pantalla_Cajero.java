@@ -35,11 +35,14 @@ public class Pantalla_Cajero {
     private JButton CANCELARCOMPRAButton;
     private Conexion conexion;
 
-
+    //Constructor de la clase con parametros para el paso de valores de la clase LOGIN
+    //y la clase Conexion
     public Pantalla_Cajero(Conexion info, String usuario) {
-        this.conexion = info;
+        this.conexion = info; //Guardar el valor de info en la variable conexion
+        // Ejecutar una consulta sql para obtener el codigo unico y el nombre del vendedor
         String query = "select codigo_unico, usuario from usuarios WHERE usuario='%s'".formatted(usuario);
         ResultSet informacion=conexion.Consulta(query);
+        // Llenar los campos de texto con la informacion obtenida de la consulta
         try {
             while (informacion.next()){
                 ingreso_codigo.setText(informacion.getString("codigo_unico"));
@@ -48,18 +51,6 @@ public class Pantalla_Cajero {
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
-        /*boton_cerrar_sesion.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame frame=(JFrame) SwingUtilities.getWindowAncestor(Pantalla_Cajero.this.panel_cajero);
-                frame.dispose();
-                JOptionPane.showMessageDialog(null,"Haz salido del sistema");
-            }
-        });*/
-
-
         boton_confirmacion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
