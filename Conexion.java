@@ -25,6 +25,14 @@ public class Conexion {
             return null;
         }
     }
+    public int Insertar(String consulta) {
+        try {
+            return sentencia.executeUpdate(consulta);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0; // Verificar cuando hay una clave duplicada
+        }
+    }
     public boolean getCredenciales(String user, String password, String tipoUsuario) {
         boolean acceso = false;
         try {

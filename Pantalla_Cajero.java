@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Pantalla_Cajero {
     JPanel panel_cajero;
@@ -69,33 +70,27 @@ public class Pantalla_Cajero {
                     String producto = String.valueOf(ingreso_producto.getSelectedItem());
                     double valor_a_pagar= Double.parseDouble(ingreso_valor_a_pagar.getText());
 
-                    if (cedula.isEmpty()||nombre_apellido.isEmpty()||direccion.isEmpty()||telefono.isEmpty()
-                            ||valor_a_pagar<=0){
-                        JOptionPane.showMessageDialog(null,"IMPOSIBLE PROCESAR, campo de texto vacio");
-
-
-                    } else if (producto=="Seleccione el producto..."||cantidad<=0) {
-                        JOptionPane.showMessageDialog(null,"No se ha selecionado ningun producto o " +
-                                "cantidad de producto");
-
-                    } else if (codigo_vendedor.isEmpty()||nombre_vendedor.isEmpty()){
-                        JOptionPane.showMessageDialog(null, "No se ingresaron datos del vendedor");
-
-                    }
-                    else{
+                    if (cedula.length()!=10 || nombre_apellido.isEmpty()||direccion.isEmpty()||telefono.length()!=10 || valor_a_pagar<=0){
+                        JOptionPane.showMessageDialog(null,"IMPOSIBLE PROCESAR, Llene adecuadamente lo campos de texto");
+                    } else if (producto.equals("Seleccione el producto...") ||cantidad<=0) {
+                        JOptionPane.showMessageDialog(null,"No se ha selecionado ningun producto o cantidad de producto");
+                    } else{
                         //aqui se ingresarian los datos a la base de datos
-                        JOptionPane.showMessageDialog(null,"Compra realizada con EXITO");
-                        System.out.println(codigo_vendedor);
-                        System.out.println(nombre_vendedor);
-                        System.out.println(cedula);
-                        System.out.println(nombre_apellido);
-                        System.out.println(direccion);
-                        System.out.println(telefono);
-                        System.out.println(cantidad);
-                        System.out.println(producto);
-                        System.out.println(valor_a_pagar);
+                        //y se mostraria un mensaje de exito
+                        conexion.Insertar("INSERT INTO Clientes (cedula, nombres, direccion, telefono) VALUES ('"+cedula+"','"+nombre_apellido+"','"+direccion+"','"+telefono+"')");
+                        ResultSet resultado = conexion.Consulta("SELECT precio FROM repuestos WHERE nombre_pieza='"+producto+"'");
+                        double precio=0;
+                        while (resultado.next()){
+                            precio=resultado.getDouble("precio");
+                        }
+                        int columnas_afectadas = conexion.Insertar("INSERT INTO Ventas (cliente, producto, cantidad, precio_unitario, total, responsable) VALUES ('"+cedula+"','"+producto+"','"+cantidad+"','"+precio+"','"+valor_a_pagar+"','"+codigo_vendedor+"')");
+                        if (columnas_afectadas>0){
+                            JOptionPane.showMessageDialog(null,"Compra realizada con EXITO");
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null,"Error al realizar la compra");
+                        }
                     }
-
                 }catch (Exception ex){
                     System.out.println(ex);
                     JOptionPane.showMessageDialog(null, "Error en los datos");
