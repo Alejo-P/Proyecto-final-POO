@@ -1,6 +1,11 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 import java.awt.event.*;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.text.ParseException;
 
 public class Pantalla_Cajero {
     JPanel panel_cajero;
@@ -19,12 +24,11 @@ public class Pantalla_Cajero {
     private JComboBox ingreso_producto;
     private JSpinner ingreso_cantidad;
     private JButton buscarButton;
-    private JTextField textField7;
     private JTabbedPane tabbedPane1;
     private JButton volverButton;
     private JButton imprimirButton;
     private JButton seleccionarButton;
-    private JTable table2;
+    private JTable Tabla_info_ventas;
     private JTable table1;
     private JTextField textField8;
     private JButton buscarButton1;
@@ -32,11 +36,14 @@ public class Pantalla_Cajero {
     private JButton actualizarButton;
     private JButton eliminarButton;
     private JButton boton_cancelar;
+    private JFormattedTextField Formato_fecha;
     private Conexion conexion;
+    private ResultSet resultado;
 
     //Constructor de la clase con parametros para el paso de valores de la clase LOGIN
     //y la clase Conexion
     public Pantalla_Cajero(Conexion info, String usuario) {
+        DefaultTableModel modelo = new DefaultTableModel(); // Crearun modelo para la tabla
         this.conexion = info; //Guardar el valor de info en la variable conexion
         // Ejecutar una consulta sql para obtener el codigo unico y el nombre del vendedor
         String query = "select codigo_unico, usuario from usuarios WHERE usuario='%s'".formatted(usuario);
@@ -76,7 +83,7 @@ public class Pantalla_Cajero {
                         //aqui se ingresarian los datos a la base de datos
                         //y se mostraria un mensaje de exito
                         conexion.Insertar("INSERT INTO Clientes (cedula, nombres, direccion, telefono) VALUES ('"+cedula+"','"+nombre_apellido+"','"+direccion+"','"+telefono+"')");
-                        ResultSet resultado = conexion.Consulta("SELECT precio FROM repuestos WHERE nombre_pieza='"+producto+"'");
+                        resultado = conexion.Consulta("SELECT precio FROM repuestos WHERE nombre_pieza='"+producto+"'");
                         double precio=0;
                         while (resultado.next()){
                             precio=resultado.getDouble("precio");
@@ -144,11 +151,62 @@ public class Pantalla_Cajero {
 
                 }
                 else{
-                    FACTURA factura_generada = new FACTURA(cedula,nombre_apellido,direccion,telefono
-                            ,cantidad,producto,valor_a_pagar);
+                    //FACTURA factura_generada = new FACTURA(cedula,nombre_apellido,direccion,telefono,cantidad,producto,valor_a_pagar);
                     JOptionPane.showMessageDialog(null, "Factura generada con exito");
                 }
             }
         });
+        buscarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!VerificarNumeros(Formato_fecha.getText())){
+                    resultado = conexion.Consulta("SELECT * FROM Ventas");
+                }
+                else {
+                    resultado = conexion.Consulta("SELECT * FROM Ventas WHERE fecha_venta='"+Formato_fecha.getText()+"'");
+                }
+                // Obtener metadatos de la consulta para configurar las columnas de la tabla
+                ResultSetMetaData metaDatos = null;
+                Tabla_info_ventas.setModel(modelo);
+                try {
+                    metaDatos = resultado.getMetaData();
+                    int columnas = metaDatos.getColumnCount();
+                    for (int i = 1; i <= columnas; i++) {
+                        modelo.addColumn(metaDatos.getColumnName(i));
+                    }
+                    // Agregar filas a la tabla con los datos de la consulta
+                    while (resultado.next()) {
+                        Object[] filas = new Object[columnas];
+                        for (int i = 1; i <= columnas; i++) {
+                            filas[i - 1] = resultado.getObject(i);
+                        }
+                        modelo.addRow(filas);
+                    }
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+            }
+        });
+    }
+
+    private static boolean VerificarNumeros(String cadena){
+        for (char letra : cadena.toCharArray()) {
+            if (letra == ' ') {
+                return false; // Si es un espacio en blanco, retornar falso
+            }
+            if (letra == '-') {
+                continue; // Si es un guión medio "-", saltar a la siguiente iteración del bucle
+            }
+            if (!Character.isDigit(letra)) {
+                return false; // Si no es un dígito y no es un guión medio "-", retornar falso
+            }
+        }
+        return true;
+    }
+    private void createUIComponents() throws ParseException {
+        // TODO: place custom component creation code here
+        MaskFormatter formato = new MaskFormatter("####-##-##");
+        Formato_fecha = new JFormattedTextField(formato);
     }
 }
