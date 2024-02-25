@@ -61,7 +61,9 @@
                     <preferred-size width="150" height="-1"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <editable value="false"/>
+                </properties>
               </component>
               <component id="b164e" class="javax.swing.JLabel">
                 <constraints>
@@ -120,7 +122,7 @@
                   <text value="Resumen de la compra"/>
                 </properties>
               </component>
-              <component id="a62e7" class="javax.swing.JSpinner" binding="ingreso_cantidad">
+              <component id="a62e7" class="javax.swing.JSpinner" binding="ingreso_cantidad" custom-create="true">
                 <constraints>
                   <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -333,7 +335,7 @@
               <grid id="3627f" layout-manager="GridLayoutManager" row-count="7" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <tabbedpane title="Untitled"/>
+                  <tabbedpane title="Stock"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -346,7 +348,7 @@
                       <text value="Realizar Busqueda Por"/>
                     </properties>
                   </component>
-                  <component id="e36bd" class="javax.swing.JTextField" binding="textField8" default-binding="true">
+                  <component id="e36bd" class="javax.swing.JTextField" binding="ID_producto_buscar">
                     <constraints>
                       <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -362,7 +364,7 @@
                       <text value="ID-Producto"/>
                     </properties>
                   </component>
-                  <component id="2e942" class="javax.swing.JButton" binding="buscarButton1" default-binding="true">
+                  <component id="2e942" class="javax.swing.JButton" binding="buscarStockButton">
                     <constraints>
                       <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>

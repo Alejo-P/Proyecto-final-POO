@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import java.awt.event.*;
@@ -30,20 +32,21 @@ public class Pantalla_Cajero {
     private JButton seleccionarButton;
     private JTable Tabla_info_ventas;
     private JTable table1;
-    private JTextField textField8;
-    private JButton buscarButton1;
+    private JTextField ID_producto_buscar;
+    private JButton buscarStockButton;
     private JTable table3;
     private JButton actualizarButton;
     private JButton eliminarButton;
     private JButton boton_cancelar;
     private JFormattedTextField Formato_fecha;
     private Conexion conexion;
-    private ResultSet resultado;
 
     //Constructor de la clase con parametros para el paso de valores de la clase LOGIN
     //y la clase Conexion
     public Pantalla_Cajero(Conexion info, String usuario) {
+        final double[] precio_pieza = new double[1];
         DefaultTableModel modelo = new DefaultTableModel(); // Crearun modelo para la tabla
+        DefaultTableModel Stock_modelo = new DefaultTableModel(); // Crearun modelo para la tabla
         this.conexion = info; //Guardar el valor de info en la variable conexion
         // Ejecutar una consulta sql para obtener el codigo unico y el nombre del vendedor
         String query = "select codigo_unico, usuario from usuarios WHERE usuario='%s'".formatted(usuario);
@@ -73,7 +76,8 @@ public class Pantalla_Cajero {
                     String telefono=ingreso_telefono.getText();
                     int cantidad=Integer.parseInt(String.valueOf(ingreso_cantidad.getValue()));
                     String producto = String.valueOf(ingreso_producto.getSelectedItem());
-                    double valor_a_pagar= Double.parseDouble(ingreso_valor_a_pagar.getText());
+                    //Extraer el valor del campo transformarlo y convertirlo a decimal
+                    double valor_a_pagar= Double.parseDouble(ingreso_valor_a_pagar.getText().replace(',', '.'));
 
                     if (cedula.length()!=10 || nombre_apellido.isEmpty()||direccion.isEmpty()||telefono.length()!=10 || valor_a_pagar<=0){
                         JOptionPane.showMessageDialog(null,"IMPOSIBLE PROCESAR, Llene adecuadamente lo campos de texto");
@@ -83,7 +87,7 @@ public class Pantalla_Cajero {
                         //aqui se ingresarian los datos a la base de datos
                         //y se mostraria un mensaje de exito
                         conexion.Insertar("INSERT INTO Clientes (cedula, nombres, direccion, telefono) VALUES ('"+cedula+"','"+nombre_apellido+"','"+direccion+"','"+telefono+"')");
-                        resultado = conexion.Consulta("SELECT precio FROM repuestos WHERE nombre_pieza='"+producto+"'");
+                        ResultSet resultado = conexion.Consulta("SELECT precio FROM repuestos WHERE nombre_pieza='"+producto+"'");
                         double precio=0;
                         while (resultado.next()){
                             precio=resultado.getDouble("precio");
@@ -159,6 +163,8 @@ public class Pantalla_Cajero {
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ResultSet resultado;
+
                 if (!VerificarNumeros(Formato_fecha.getText())){
                     resultado = conexion.Consulta("SELECT * FROM Ventas");
                 }
@@ -167,8 +173,11 @@ public class Pantalla_Cajero {
                 }
                 // Obtener metadatos de la consulta para configurar las columnas de la tabla
                 ResultSetMetaData metaDatos = null;
-                Tabla_info_ventas.setModel(modelo);
+
                 try {
+                    modelo.setRowCount(0); // Limpiar la tabla
+                    modelo.setColumnCount(0); // Limpiar la tabla
+                    Tabla_info_ventas.setModel(modelo); // Asignar el modelo a la tabla
                     metaDatos = resultado.getMetaData();
                     int columnas = metaDatos.getColumnCount();
                     for (int i = 1; i <= columnas; i++) {
@@ -188,6 +197,97 @@ public class Pantalla_Cajero {
 
             }
         });
+        ingreso_producto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //ESTA PARTE DEL CODIGO TOMA EL PRODUCTO SELECCIONADO Y BUSCA SU PRECIO EN LA BASE DE DATOS
+                //Y LO MUESTRA EN EL CAMPO DE TEXTO
+                String producto = String.valueOf(ingreso_producto.getSelectedItem());
+                if (producto.equals("Seleccione el producto...")){
+                    ingreso_valor_a_pagar.setText("");
+                    ingreso_cantidad.setValue(0);
+                    ingreso_cantidad.setEnabled(false);
+                }
+                else {
+                    try {
+                        ResultSet resultado = conexion.Consulta("SELECT * FROM repuestos WHERE nombre_pieza='"+producto+"'");
+                        int cantidad=0;
+                        while (resultado.next()){
+                            cantidad=resultado.getInt("stock");
+                            precio_pieza[0]=resultado.getDouble("precio");
+                        }
+                        actualizarRango(0, cantidad, 0, 1);
+                        ingreso_cantidad.setEnabled(true);
+                        ingreso_valor_a_pagar.setText(String.valueOf(precio_pieza[0] * Integer.parseInt(String.valueOf(ingreso_cantidad.getValue()))));
+
+                    }catch (Exception ex){
+                        System.out.println(ex);
+                    }
+                }
+            }
+        });
+        ingreso_cantidad.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                //ESTA PARTE DEL CODIGO TOMA EL PRODUCTO SELECCIONADO Y BUSCA SU PRECIO EN LA BASE DE DATOS
+                //Y LO MUESTRA EN EL CAMPO DE TEXTO
+                String producto = String.valueOf(ingreso_producto.getSelectedItem());
+                if (producto.equals("Seleccione el producto...")){
+                    ingreso_valor_a_pagar.setText("");
+                }
+                else {
+                    try {
+                        ResultSet resultado = conexion.Consulta("SELECT precio FROM repuestos WHERE nombre_pieza='"+producto+"'");
+                        double precio=0;
+                        while (resultado.next()){
+                            precio=resultado.getDouble("precio");
+                        }
+                        int cantidad=Integer.parseInt(String.valueOf(ingreso_cantidad.getValue()));
+                        String valor = "%.2f".formatted(precio*cantidad);
+                        ingreso_valor_a_pagar.setText(valor);
+                    }catch (Exception ex){
+                        System.out.println(ex);
+                    }
+                }
+            }
+        });
+        buscarStockButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ResultSet resultado;
+                //ESTA PARTE DEL CODIGO BUSCA EL PRODUCTO POR SU ID
+                //Y MUESTRA SU INFORMACION EN LA TABLA
+                String id_producto = ID_producto_buscar.getText();
+                if (id_producto.isEmpty()){
+                    resultado = conexion.Consulta("SELECT * FROM repuestos");
+                }
+                else {
+                    resultado = conexion.Consulta("SELECT * FROM repuestos WHERE id='" + id_producto + "'");
+                }
+                try {
+                    // Obtener metadatos de la consulta para configurar las columnas de la tabla
+                    ResultSetMetaData metaDatos = null;
+                    Stock_modelo.setRowCount(0); // Limpiar la tabla
+                    Stock_modelo.setColumnCount(0); // Limpiar la tabla
+                    table3.setModel(Stock_modelo); // Asignar el modelo a la tabla
+                    metaDatos = resultado.getMetaData();
+                    int columnas = metaDatos.getColumnCount();
+                    for (int i = 1; i <= columnas; i++) {
+                        Stock_modelo.addColumn(metaDatos.getColumnName(i));
+                    }
+                    // Agregar filas a la tabla con los datos de la consulta
+                    while (resultado.next()) {
+                        Object[] filas = new Object[columnas];
+                        for (int i = 1; i <= columnas; i++) {
+                            filas[i - 1] = resultado.getObject(i);
+                        }
+                        Stock_modelo.addRow(filas);
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
     private static boolean VerificarNumeros(String cadena){
@@ -204,9 +304,18 @@ public class Pantalla_Cajero {
         }
         return true;
     }
+    private void actualizarRango(int minimo, int maximo, int valor_inicial, int pasos){
+        //ESTA PARTE DEL CODIGO LIMITA EL RANGO DE VALORES QUE SE PUEDEN INGRESAR EN EL SPINNER
+        SpinnerNumberModel rango = new SpinnerNumberModel(valor_inicial, minimo, maximo, pasos);
+        ingreso_cantidad.setModel(rango);
+    }
     private void createUIComponents() throws ParseException {
         // TODO: place custom component creation code here
+        //ESTA PARTE DEL CODIGO CREA UN FORMATO PARA EL CAMPO DE TEXTO
         MaskFormatter formato = new MaskFormatter("####-##-##");
         Formato_fecha = new JFormattedTextField(formato);
+        ingreso_cantidad = new JSpinner();
+        actualizarRango(0, 0, 0, 1);
+        ingreso_cantidad.setEnabled(false);
     }
 }
