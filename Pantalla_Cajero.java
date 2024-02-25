@@ -115,9 +115,9 @@ public class Pantalla_Cajero {
                             }
                             int columnas_afectadas = conexion.Insertar("INSERT INTO Ventas (cliente, producto, cantidad, precio_unitario, total, responsable) VALUES ('"+cedula+"','"+producto+"','"+cantidad+"','"+precio_pieza[0]+"','"+valor_a_pagar+"','"+codigo_vendedor+"')");
                             if (columnas_afectadas>0){
-                                JOptionPane.showMessageDialog(null,"Compra realizada con EXITO");
                                 //actualizar el stock del producto
                                 conexion.Insertar("UPDATE Repuestos SET stock=stock-"+cantidad+" WHERE id="+id);
+                                JOptionPane.showMessageDialog(null,"Compra realizada con EXITO");
                             }
                             else {
                                 JOptionPane.showMessageDialog(null,"Error al realizar la compra");
