@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class Pantalla_Cajero {
     JPanel panel_cajero;
@@ -12,7 +10,7 @@ public class Pantalla_Cajero {
     private JTextField ingreso_valor_a_pagar;
     private JButton Boton1;
     private JButton boton_confirmacion;
-    private JButton Boton3;
+    private JButton boton_factura;
     private JButton boton_cerrar_sesion;
     private JTextField ingreso_codigo;
     private JTextField ingreso_vendedor;
@@ -33,7 +31,7 @@ public class Pantalla_Cajero {
     private JTable table3;
     private JButton actualizarButton;
     private JButton eliminarButton;
-    private JButton CANCELARCOMPRAButton;
+    private JButton boton_cancelar;
     private Conexion conexion;
 
     //Constructor de la clase con parametros para el paso de valores de la clase LOGIN
@@ -106,7 +104,7 @@ public class Pantalla_Cajero {
 
             }
         });
-        CANCELARCOMPRAButton.addActionListener(new ActionListener() {
+        boton_cancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -126,7 +124,7 @@ public class Pantalla_Cajero {
 
             }
         });
-        Boton3.addActionListener(new ActionListener() {
+        boton_factura.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -142,8 +140,13 @@ public class Pantalla_Cajero {
 
                 if (cedula.isEmpty()||nombre_apellido.isEmpty()||direccion.isEmpty()||telefono.isEmpty()
                         ||valor_a_pagar<=0||producto=="Seleccione el producto..."){
+                    JOptionPane.showMessageDialog(null, "No se puede generar la Factura, campos vacios");
 
-
+                }
+                else{
+                    FACTURA factura_generada = new FACTURA(cedula,nombre_apellido,direccion,telefono
+                            ,cantidad,producto,valor_a_pagar);
+                    JOptionPane.showMessageDialog(null, "Factura generada con exito");
                 }
             }
         });

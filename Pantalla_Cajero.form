@@ -213,7 +213,7 @@
                   <text value="Confirmar Compra"/>
                 </properties>
               </component>
-              <component id="853c5" class="javax.swing.JButton" binding="CANCELARCOMPRAButton" default-binding="true">
+              <component id="853c5" class="javax.swing.JButton" binding="boton_cancelar">
                 <constraints>
                   <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -221,7 +221,7 @@
                   <text value="CANCELAR COMPRA"/>
                 </properties>
               </component>
-              <component id="93db1" class="javax.swing.JButton" binding="Boton3">
+              <component id="93db1" class="javax.swing.JButton" binding="boton_factura">
                 <constraints>
                   <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
