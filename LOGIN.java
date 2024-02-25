@@ -87,7 +87,9 @@ public class LOGIN {
         ingresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Conexion local
                 //BDD = new Conexion("JAVA","123456", "jdbc:mysql://localhost:3306/base_poo");
+                // Conexion en la nube
                 BDD = new Conexion("uuaswpmfddjijnsj","P0iihEDAEoSCjcNLblwX", "jdbc:mysql://uuaswpmfddjijnsj:P0iihEDAEoSCjcNLblwX@bx96efbqmpafypdnsonx-mysql.services.clever-cloud.com:3306/bx96efbqmpafypdnsonx");
 
                 if (BDD.getCredenciales(textField1.getText(), new String (passwordField1.getPassword()), comboBox1.getSelectedItem().toString())){
