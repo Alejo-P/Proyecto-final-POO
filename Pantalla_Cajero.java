@@ -76,7 +76,7 @@ public class Pantalla_Cajero {
                     String telefono=ingreso_telefono.getText();
                     int cantidad=Integer.parseInt(String.valueOf(ingreso_cantidad.getValue()));
                     String producto = String.valueOf(ingreso_producto.getSelectedItem());
-                    //Extraer el valor del campo transformarlo y convertirlo a decimal
+                    //Extraer el valor del campo, transformarlo y convertirlo a decimal
                     double valor_a_pagar= Double.parseDouble(ingreso_valor_a_pagar.getText().replace(',', '.'));
 
                     if (cedula.length()!=10 || nombre_apellido.isEmpty()||direccion.isEmpty()||telefono.length()!=10 || valor_a_pagar<=0){
