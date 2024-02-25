@@ -49,7 +49,7 @@ public class Pantalla_Cajero {
         DefaultTableModel Stock_modelo = new DefaultTableModel(); // Crearun modelo para la tabla
         this.conexion = info; //Guardar el valor de info en la variable conexion
         // Ejecutar una consulta sql para obtener el codigo unico y el nombre del vendedor
-        String query = "select codigo_unico, usuario from usuarios WHERE usuario='%s'".formatted(usuario);
+        String query = "select codigo_unico, usuario from Usuarios WHERE usuario='%s'".formatted(usuario);
         ResultSet informacion=conexion.Consulta(query);
         // Llenar los campos de texto con la informacion obtenida de la consulta
         try {
@@ -87,7 +87,7 @@ public class Pantalla_Cajero {
                         //aqui se ingresarian los datos a la base de datos
                         //y se mostraria un mensaje de exito
                         conexion.Insertar("INSERT INTO Clientes (cedula, nombres, direccion, telefono) VALUES ('"+cedula+"','"+nombre_apellido+"','"+direccion+"','"+telefono+"')");
-                        ResultSet resultado = conexion.Consulta("SELECT precio FROM repuestos WHERE nombre_pieza='"+producto+"'");
+                        ResultSet resultado = conexion.Consulta("SELECT precio FROM Repuestos WHERE nombre_pieza='"+producto+"'");
                         double precio=0;
                         while (resultado.next()){
                             precio=resultado.getDouble("precio");
@@ -210,7 +210,7 @@ public class Pantalla_Cajero {
                 }
                 else {
                     try {
-                        ResultSet resultado = conexion.Consulta("SELECT * FROM repuestos WHERE nombre_pieza='"+producto+"'");
+                        ResultSet resultado = conexion.Consulta("SELECT * FROM Repuestos WHERE nombre_pieza='"+producto+"'");
                         int cantidad=0;
                         while (resultado.next()){
                             cantidad=resultado.getInt("stock");
@@ -237,7 +237,7 @@ public class Pantalla_Cajero {
                 }
                 else {
                     try {
-                        ResultSet resultado = conexion.Consulta("SELECT precio FROM repuestos WHERE nombre_pieza='"+producto+"'");
+                        ResultSet resultado = conexion.Consulta("SELECT precio FROM Repuestos WHERE nombre_pieza='"+producto+"'");
                         double precio=0;
                         while (resultado.next()){
                             precio=resultado.getDouble("precio");
@@ -259,10 +259,10 @@ public class Pantalla_Cajero {
                 //Y MUESTRA SU INFORMACION EN LA TABLA
                 String id_producto = ID_producto_buscar.getText();
                 if (id_producto.isEmpty()){
-                    resultado = conexion.Consulta("SELECT * FROM repuestos");
+                    resultado = conexion.Consulta("SELECT * FROM Repuestos");
                 }
                 else {
-                    resultado = conexion.Consulta("SELECT * FROM repuestos WHERE id='" + id_producto + "'");
+                    resultado = conexion.Consulta("SELECT * FROM Repuestos WHERE id='" + id_producto + "'");
                 }
                 try {
                     // Obtener metadatos de la consulta para configurar las columnas de la tabla
