@@ -1,8 +1,5 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+
 public class Conexion {
     private Connection conexion;
     private Statement sentencia;
@@ -28,10 +25,12 @@ public class Conexion {
     public int Insertar(String consulta) {
         try {
             return sentencia.executeUpdate(consulta);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return 0; // Verificar cuando hay una clave duplicada
+        } catch (SQLIntegrityConstraintViolationException e) {
+            return -1;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
+        return 0;
     }
     public boolean getCredenciales(String user, String password, String tipoUsuario) {
         boolean acceso = false;

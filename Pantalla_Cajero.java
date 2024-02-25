@@ -63,6 +63,7 @@ public class Pantalla_Cajero {
         boton_confirmacion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                boolean procesar_compra=false;
                 //ESTA PARTE DEL CODIGO TOMA LOS DATOS Y LOS ALMACENA EN VARIABLES
                 //TAMBIEN ESTA VALIDADOS
                 //EL TRY-CATCH MUESTRA UN MENSAJE CUANDO EL USARIO INGRESA UN VALOR DIFERENTE AL ESPERADO
@@ -86,18 +87,41 @@ public class Pantalla_Cajero {
                     } else{
                         //aqui se ingresarian los datos a la base de datos
                         //y se mostraria un mensaje de exito
-                        conexion.Insertar("INSERT INTO Clientes (cedula, nombres, direccion, telefono) VALUES ('"+cedula+"','"+nombre_apellido+"','"+direccion+"','"+telefono+"')");
-                        ResultSet resultado = conexion.Consulta("SELECT precio FROM Repuestos WHERE nombre_pieza='"+producto+"'");
-                        double precio=0;
-                        while (resultado.next()){
-                            precio=resultado.getDouble("precio");
+                        int insercion = conexion.Insertar("INSERT INTO Clientes (cedula, nombres, direccion, telefono) VALUES ('"+cedula+"','"+nombre_apellido+"','"+direccion+"','"+telefono+"')");
+                        if (insercion<0){
+                            int opcion = JOptionPane.showConfirmDialog(panel_cajero,"Desea actualizar el registro", "Cliente ya registrado", JOptionPane.YES_NO_OPTION);
+                            if (opcion==JOptionPane.YES_OPTION){
+                                int columnas_afectadas = conexion.Insertar("UPDATE Clientes SET nombres='"+nombre_apellido+"', direccion='"+direccion+"', telefono='"+telefono+"' WHERE cedula='"+cedula+"'");
+                                if (columnas_afectadas>0){
+                                    procesar_compra=true;
+                                    JOptionPane.showMessageDialog(null,"Registro actualizado con EXITO");
+                                }
+                                else {
+                                    JOptionPane.showMessageDialog(null,"Error al actualizar el registro");
+                                }
+                            }
                         }
-                        int columnas_afectadas = conexion.Insertar("INSERT INTO Ventas (cliente, producto, cantidad, precio_unitario, total, responsable) VALUES ('"+cedula+"','"+producto+"','"+cantidad+"','"+precio+"','"+valor_a_pagar+"','"+codigo_vendedor+"')");
-                        if (columnas_afectadas>0){
-                            JOptionPane.showMessageDialog(null,"Compra realizada con EXITO");
+                        else if (insercion>0){
+                            procesar_compra=true;
                         }
                         else {
-                            JOptionPane.showMessageDialog(null,"Error al realizar la compra");
+                            JOptionPane.showMessageDialog(null,"Error al realizar el registro");
+                        }
+                        if (procesar_compra){
+                            ResultSet resultado = conexion.Consulta("SELECT id FROM Repuestos WHERE nombre_pieza='"+producto+"'");
+                            int id=0;
+                            while (resultado.next()){
+                                id=resultado.getInt("id");
+                            }
+                            int columnas_afectadas = conexion.Insertar("INSERT INTO Ventas (cliente, producto, cantidad, precio_unitario, total, responsable) VALUES ('"+cedula+"','"+producto+"','"+cantidad+"','"+precio_pieza[0]+"','"+valor_a_pagar+"','"+codigo_vendedor+"')");
+                            if (columnas_afectadas>0){
+                                JOptionPane.showMessageDialog(null,"Compra realizada con EXITO");
+                                //actualizar el stock del producto
+                                conexion.Insertar("UPDATE Repuestos SET stock=stock-"+cantidad+" WHERE id="+id);
+                            }
+                            else {
+                                JOptionPane.showMessageDialog(null,"Error al realizar la compra");
+                            }
                         }
                     }
                 }catch (Exception ex){
