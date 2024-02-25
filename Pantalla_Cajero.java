@@ -147,7 +147,12 @@ public class Pantalla_Cajero {
                 String telefono=ingreso_telefono.getText();
                 int cantidad=Integer.parseInt(String.valueOf(ingreso_cantidad.getValue()));
                 String producto = String.valueOf(ingreso_producto.getSelectedItem());
-                double valor_a_pagar= Double.parseDouble(ingreso_valor_a_pagar.getText());
+
+                //en esta parte del codigo remplazamos la como por un punto para poder convertir el valor a pagar en double.
+                String valor = ingreso_valor_a_pagar.getText();
+                valor=valor.replace(",", ".");
+                double valor_a_pagar= Double.parseDouble(valor);
+
 
                 if (cedula.isEmpty()||nombre_apellido.isEmpty()||direccion.isEmpty()||telefono.isEmpty()
                         ||valor_a_pagar<=0||producto=="Seleccione el producto..."){
@@ -155,7 +160,8 @@ public class Pantalla_Cajero {
 
                 }
                 else{
-                    //FACTURA factura_generada = new FACTURA(cedula,nombre_apellido,direccion,telefono,cantidad,producto,valor_a_pagar);
+                    FACTURA factura_generada = new FACTURA(cedula,nombre_apellido,direccion,telefono,cantidad,producto,valor_a_pagar);
+                    factura_generada.crear_factura();
                     JOptionPane.showMessageDialog(null, "Factura generada con exito");
                 }
             }

@@ -49,7 +49,7 @@ public class FACTURA {
         try {
 
             //el archivo se guadara con el numero de cedula correspodiente de cada cliente
-            archivo = new FileOutputStream("C:\\Escritorio\\"+cedula+".pdf");
+            archivo = new FileOutputStream("PDF_generado\\"+cedula+".pdf");
             PdfWriter.getInstance(documento, archivo);
 
             //abrimos el documento para que pueda ser editado
@@ -68,7 +68,7 @@ public class FACTURA {
             documento.add(new Paragraph("Telefono: "+telefono));
             documento.add(new Paragraph("Producto adquirido: "+producto));
             documento.add(new Paragraph("Cantidad: "+cantidad));
-            documento.add(new Paragraph("Precio final: $ "+valor_a_pagar));
+            documento.add(new Paragraph("Precio final: $"+valor_a_pagar));
 
             //cerramos el documento
             documento.close();
