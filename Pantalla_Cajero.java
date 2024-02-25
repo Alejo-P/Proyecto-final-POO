@@ -179,7 +179,7 @@ public class Pantalla_Cajero {
 
 
                 if (cedula.isEmpty()||nombre_apellido.isEmpty()||direccion.isEmpty()||telefono.isEmpty()
-                        ||valor_a_pagar<=0||producto=="Seleccione el producto..."){
+                        ||valor_a_pagar<=0||producto=="Seleccione el producto..."||cantidad==0){
                     JOptionPane.showMessageDialog(null, "No se puede generar la Factura, campos vacios");
 
                 }
