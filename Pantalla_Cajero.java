@@ -184,7 +184,7 @@ public class Pantalla_Cajero {
 
                 }
                 else{
-                    FACTURA factura_generada = new FACTURA(cedula,nombre_apellido,direccion,telefono,cantidad,producto,valor_a_pagar);
+                    FACTURA factura_generada = new FACTURA(codigo_vendedor,nombre_vendedor,cedula,nombre_apellido,direccion,telefono,cantidad,producto,valor_a_pagar);
                     factura_generada.crear_factura();
                     JOptionPane.showMessageDialog(null, "Factura generada con exito");
                 }
