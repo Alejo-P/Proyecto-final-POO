@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Objects;
 
 public class Pantalla_Cajero {
     JPanel panel_cajero;
@@ -175,15 +176,14 @@ public class Pantalla_Cajero {
                 //en esta parte del codigo remplazamos la como por un punto para poder convertir el valor a pagar en double.
                 String valor = ingreso_valor_a_pagar.getText();
                 valor=valor.replace(",", ".");
-                double valor_a_pagar= Double.parseDouble(valor);
-
 
                 if (cedula.isEmpty()||nombre_apellido.isEmpty()||direccion.isEmpty()||telefono.isEmpty()
-                        ||valor_a_pagar<=0||producto=="Seleccione el producto..."||cantidad==0){
+                        || valor.isEmpty() || producto.equals("Seleccione el producto...") ||cantidad==0){
                     JOptionPane.showMessageDialog(null, "No se puede generar la Factura, campos vacios");
-
                 }
                 else{
+                    // Si la cadena no es nula convierte su valor a double
+                    double valor_a_pagar= Double.parseDouble(valor);
                     FACTURA factura_generada = new FACTURA(codigo_vendedor,nombre_vendedor,cedula,nombre_apellido,direccion,telefono,cantidad,producto,valor_a_pagar);
                     factura_generada.crear_factura();
                     JOptionPane.showMessageDialog(null, "Factura generada con exito");
