@@ -3,7 +3,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
+import java.awt.*;
 import java.awt.event.*;
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -32,7 +34,6 @@ public class Pantalla_Cajero {
     private JButton imprimirButton;
     private JButton seleccionarButton;
     private JTable Tabla_info_ventas;
-    private JTable table1;
     private JTextField ID_producto_buscar;
     private JButton buscarStockButton;
     private JTable table3;
@@ -40,6 +41,7 @@ public class Pantalla_Cajero {
     private JButton eliminarButton;
     private JButton boton_cancelar;
     private JFormattedTextField Formato_fecha;
+    private JLabel Imagen_producto;
     private Conexion conexion;
 
     //Constructor de la clase con parametros para el paso de valores de la clase LOGIN
@@ -234,6 +236,7 @@ public class Pantalla_Cajero {
                 //Y LO MUESTRA EN EL CAMPO DE TEXTO
                 String producto = String.valueOf(ingreso_producto.getSelectedItem());
                 if (producto.equals("Seleccione el producto...")){
+                    Imagen_producto.setIcon(null);
                     ingreso_valor_a_pagar.setText("");
                     ingreso_cantidad.setValue(0);
                     ingreso_cantidad.setEnabled(false);
@@ -242,12 +245,23 @@ public class Pantalla_Cajero {
                     try {
                         ResultSet resultado = conexion.Consulta("SELECT * FROM Repuestos WHERE nombre_pieza='"+producto+"'");
                         int cantidad=0;
+                        Blob imagen_blob=null;
                         while (resultado.next()){
                             cantidad=resultado.getInt("stock");
                             precio_pieza[0]=resultado.getDouble("precio");
+                            // Extraer la imagen de la base de datos
+                            imagen_blob=resultado.getBlob("imagen");
+                            byte[] imagen_bytes = imagen_blob.getBytes(1, (int) imagen_blob.length());
+                            ImageIcon imagen = new ImageIcon(imagen_bytes);
+                            // Ubicar la imagen en el JLabel correspondiente y redimensionarla
+                            Image imagen_redimensionada = imagen.getImage().getScaledInstance(Imagen_producto.getWidth(), Imagen_producto.getHeight(), Image.SCALE_SMOOTH);
+                            Imagen_producto.setIcon(new ImageIcon(imagen_redimensionada));
                         }
                         actualizarRango(0, cantidad, 0, 1);
                         ingreso_cantidad.setEnabled(true);
+
+
+
                         ingreso_valor_a_pagar.setText(String.valueOf(precio_pieza[0] * Integer.parseInt(String.valueOf(ingreso_cantidad.getValue()))));
 
                     }catch (Exception ex){
