@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,13 +23,16 @@ public class Patalla_Admin {
     private JTextField textField5;
 
 
-    public Patalla_Admin() {
+   /* public Patalla_Admin() {
             comprobarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String opcionSeleccionada = (String) comboBox1.getSelectedItem();
+                    DefaultTableModel modelo_stock = new DefaultTableModel();
+                    modelo_stock.addColumn();
                     switch (opcionSeleccionada) {
                         case "Disco de Frenos":
+
                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
                             break;
                         case "Pastillas de Frenos":
@@ -64,5 +68,39 @@ public class Patalla_Admin {
                     }
                 }
             });
-        }
+        }*/
+    public Patalla_Admin() {
+        comprobarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String opcionSeleccionada = (String) comboBox1.getSelectedItem();
+                DefaultTableModel modelo_stock = new DefaultTableModel();
+                modelo_stock.addColumn("Producto");
+                modelo_stock.addColumn("Estado");
+
+                switch (opcionSeleccionada) {
+                    case "Disco de Frenos":
+                    case "Pastillas de Frenos":
+                    case "Bujias":
+                    case "Filtro de Aceite":
+                    case "Bomba de Gasolina":
+                    case "Bateria":
+                    case "Aceite de Motor":
+                    case "Refrigerante":
+                    case "Neumaticos":
+                    case "Pedales":
+                        Object[] rowData = {opcionSeleccionada, "Se encuentra en stock"};
+                        modelo_stock.addRow(rowData);
+                        break;
+                    default:
+                        Object[] defaultRowData = {opcionSeleccionada, "No has seleccionado ninguna opción"};
+                        modelo_stock.addRow(defaultRowData);
+                        break;
+                }
+
+                // Aquí debes tener un JTable previamente creado en tu interfaz
+                table1.setModel(modelo_stock);
+            }
+        });
+    }
     }
