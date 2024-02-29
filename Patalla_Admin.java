@@ -21,54 +21,62 @@ public class Patalla_Admin {
     private JTextField textField2;
     private JTextField textField3;
     private JTextField textField5;
+    private JTabbedPane tabbedPane2;
+    private JComboBox comboBox3;
+    private JTextField textField4;
+    private JTextField textField6;
+    private JTextField textField7;
+    private JButton insertarImagenButton;
+    private JButton seleccionarArchivoButton;
+    private JButton salirButton2;
 
 
-   /* public Patalla_Admin() {
-            comprobarButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String opcionSeleccionada = (String) comboBox1.getSelectedItem();
-                    DefaultTableModel modelo_stock = new DefaultTableModel();
-                    modelo_stock.addColumn();
-                    switch (opcionSeleccionada) {
-                        case "Disco de Frenos":
+    /* public Patalla_Admin() {
+             comprobarButton.addActionListener(new ActionListener() {
+                 @Override
+                 public void actionPerformed(ActionEvent e) {
+                     String opcionSeleccionada = (String) comboBox1.getSelectedItem();
+                     DefaultTableModel modelo_stock = new DefaultTableModel();
+                     modelo_stock.addColumn();
+                     switch (opcionSeleccionada) {
+                         case "Disco de Frenos":
 
-                            JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                            break;
-                        case "Pastillas de Frenos":
-                            JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                            break;
-                        case "Bujias":
-                            JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                            break;
-                        case "Filtro de Aceite":
-                            JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                            break;
-                        case "Bomba de Gasolina":
-                            JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                            break;
-                        case "Bateria":
-                            JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                            break;
-                        case "Aceite de Motor":
-                            JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                            break;
-                        case "Refrigerante":
-                            JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                            break;
-                        case "Neumaticos":
-                            JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                            break;
-                        case "Pedales":
-                            JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                            break;
-                        default:
-                            JOptionPane.showMessageDialog(null, "No has seleccionado ninguna opción");
-                            break;
-                    }
-                }
-            });
-        }*/
+                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
+                             break;
+                         case "Pastillas de Frenos":
+                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
+                             break;
+                         case "Bujias":
+                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
+                             break;
+                         case "Filtro de Aceite":
+                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
+                             break;
+                         case "Bomba de Gasolina":
+                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
+                             break;
+                         case "Bateria":
+                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
+                             break;
+                         case "Aceite de Motor":
+                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
+                             break;
+                         case "Refrigerante":
+                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
+                             break;
+                         case "Neumaticos":
+                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
+                             break;
+                         case "Pedales":
+                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
+                             break;
+                         default:
+                             JOptionPane.showMessageDialog(null, "No has seleccionado ninguna opción");
+                             break;
+                     }
+                 }
+             });
+         }*/
     public Patalla_Admin() {
         comprobarButton.addActionListener(new ActionListener() {
             @Override
