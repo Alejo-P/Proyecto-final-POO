@@ -105,12 +105,12 @@ public class LOGIN {
 
 
                         //Centrar la ventana en la pantalla
-                        Dimension screenSize= Toolkit.getDefaultToolkit().getScreenSize();
-                        int width=frame_2.getSize().width;
-                        int height=frame_2.getSize().height;
-                        int x=(screenSize.width-width)/2;
+                        Dimension screenSize= Toolkit.getDefaultToolkit().getScreenSize();//Obtiene el tamaño de la pantalla
+                        int width=frame_2.getSize().width;//Obtiene el ancho  de la ventana actual
+                        int height=frame_2.getSize().height;//Obtiene el alto  de la ventana actual
+                        int x=(screenSize.width-width)/2; //Calcula las coordenadas x y y para centrar la ventana en la pantalla
                         int y=(screenSize.height-height)/2;
-                        frame_2.setLocation(x,y);
+                        frame_2.setLocation(x,y); //Establece la ubicacion de la ventana en las coordenadas calculads
 
 
                     }

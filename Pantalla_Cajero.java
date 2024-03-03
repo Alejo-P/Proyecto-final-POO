@@ -45,9 +45,11 @@ public class Pantalla_Cajero {
     private JTable Tabla1;
     private JButton agregarButton;
     private Conexion conexion;
+    private DefaultTableModel modeloTabla1;
 
     //Constructor de la clase con parametros para el paso de valores de la clase LOGIN
     //y la clase Conexion
+
     public Pantalla_Cajero(Conexion info, String usuario) {
         final double[] precio_pieza = new double[1];
         DefaultTableModel modelo = new DefaultTableModel(); // Crearun modelo para la tabla
@@ -334,13 +336,59 @@ public class Pantalla_Cajero {
                 }
             }
         });
+        modeloTabla1 = new DefaultTableModel(new Object[]{"Producto", "Cantidad", "Precio Unitario", "Total"}, 0);
+
         agregarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("Boton agregar clickeado");
+                String producto=String.valueOf(ingreso_producto.getSelectedItem());
+                int cantidad=(int) ingreso_cantidad.getValue();
+                double precioUnitario=precio_pieza[0];//Obtiene el precio del producto
+                double totalProducto=precioUnitario*cantidad;
+                modeloTabla1.addRow(new Object[]{producto, cantidad, precioUnitario, totalProducto});
+
+                double totalActual=calcularTotalTabla(modeloTabla1);
+                System.out.println("Total actual en la tabla" +totalActual);
+
+                modeloTabla1.fireTableDataChanged();
+
 
             }
         });
+        eliminarProductoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int filaSeleccionada=Tabla1.getSelectedRow();
+
+                if (filaSeleccionada!=-1){
+                    String producto=(String) modeloTabla1.getValueAt(filaSeleccionada, 0);
+                    int cantidad=(int) modeloTabla1.getValueAt(filaSeleccionada, 1);
+                    double totalProducto=(double) modeloTabla1.getValueAt(filaSeleccionada, 3);
+
+                    double totalActual=calcularTotalTabla(modeloTabla1)-totalProducto;
+
+                    modeloTabla1.removeRow(filaSeleccionada);
+
+                }
+
+
+            }
+        });
+
     }
+    private double calcularTotalTabla(DefaultTableModel modelo) {
+        double total = 0.0;
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            if (modelo.getColumnCount() >= 4) {
+                total += (double) modelo.getValueAt(i, 3);
+            } else {
+                System.err.println("La tabla no tiene suficientes columnas.");
+            }
+        }
+        return total;
+    }
+
 
     private static boolean VerificarNumeros(String cadena){
         for (char letra : cadena.toCharArray()) {
