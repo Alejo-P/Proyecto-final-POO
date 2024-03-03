@@ -43,6 +43,7 @@ public class Pantalla_Cajero {
     private JLabel Imagen_producto;
     private JButton eliminarProductoButton;
     private JTable Tabla1;
+    private JButton agregarButton;
     private Conexion conexion;
 
     //Constructor de la clase con parametros para el paso de valores de la clase LOGIN
@@ -331,6 +332,12 @@ public class Pantalla_Cajero {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
+            }
+        });
+        agregarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }
