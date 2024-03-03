@@ -11,9 +11,6 @@ public class main {
         frame.setContentPane(new LOGIN().Inicio_Cajero);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setUndecorated(true); //Elimina la barra de titulo
-        //hace que la pantalla apareca en el centro
-        frame.setLocationRelativeTo(null);
-
 
         //Permite mover la ventana arrastrandola con el mouse----------------------
         frame.addMouseListener(new MouseAdapter() {
@@ -36,9 +33,9 @@ public class main {
             }
         });
         //------------------------------------------------------
-
         frame.pack();
+        //hace que la pantalla apareca en el centro
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-
     }
 }

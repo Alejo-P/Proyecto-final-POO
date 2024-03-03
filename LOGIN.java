@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -100,7 +101,18 @@ public class LOGIN {
                         frame_2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         frame_2.pack();
                         frame_2.setVisible(true);
-                        main.frame.dispose();
+                        main.frame.dispose(); //Hace que la pantalla de inicio desaparezca una vez que se ingrese
+
+
+                        //Centrar la ventana en la pantalla
+                        Dimension screenSize= Toolkit.getDefaultToolkit().getScreenSize();
+                        int width=frame_2.getSize().width;
+                        int height=frame_2.getSize().height;
+                        int x=(screenSize.width-width)/2;
+                        int y=(screenSize.height-height)/2;
+                        frame_2.setLocation(x,y);
+
+
                     }
                     else{
                         //JFrame pantallaAdministrador=new JFrame("Administrador");

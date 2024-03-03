@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Objects;
 
 public class Pantalla_Cajero {
     JPanel panel_cajero;
@@ -42,6 +41,8 @@ public class Pantalla_Cajero {
     private JButton boton_cancelar;
     private JFormattedTextField Formato_fecha;
     private JLabel Imagen_producto;
+    private JButton eliminarProductoButton;
+    private JTable Tabla1;
     private Conexion conexion;
 
     //Constructor de la clase con parametros para el paso de valores de la clase LOGIN
