@@ -3,6 +3,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Patalla_Admin {
     private JTabbedPane tabbedPane1;
@@ -10,74 +12,25 @@ public class Patalla_Admin {
     private JButton comprobarButton;
     private JComboBox comboBox2;
     private JButton accederButton;
-    private JButton salirButton;
-    private JButton salirButton1;
     private JPasswordField passwordField1;
-    private JTextField textField1;
+    private JTextField usuario;
     private JPasswordField passwordField2;
     private JButton agregarButton;
     JPanel pantalla;
     private JTable table1;
     private JTable table2;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField5;
-    private JButton salirButton2;
+    private JTextField nombre;
+    private JTextField cedula;
+    private JTextField correo;
     private JTextField ingreso_producto;
     private JTextField ingreso_stock;
     private JTextField ingreso_precio;
     private JButton seleccionarUnaImagenButton;
     private JButton insertarPorductoButton;
+    private JButton salirButton1;
     private Repuesto repuesto;
     private Conexion conexion;
 
-
-    /* public Patalla_Admin() {
-             comprobarButton.addActionListener(new ActionListener() {
-                 @Override
-                 public void actionPerformed(ActionEvent e) {
-                     String opcionSeleccionada = (String) comboBox1.getSelectedItem();
-                     DefaultTableModel modelo_stock = new DefaultTableModel();
-                     modelo_stock.addColumn();
-                     switch (opcionSeleccionada) {
-                         case "Disco de Frenos":
-
-                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                             break;
-                         case "Pastillas de Frenos":
-                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                             break;
-                         case "Bujias":
-                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                             break;
-                         case "Filtro de Aceite":
-                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                             break;
-                         case "Bomba de Gasolina":
-                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                             break;
-                         case "Bateria":
-                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                             break;
-                         case "Aceite de Motor":
-                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                             break;
-                         case "Refrigerante":
-                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                             break;
-                         case "Neumaticos":
-                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                             break;
-                         case "Pedales":
-                             JOptionPane.showMessageDialog(null, "Se encuentra en stock");
-                             break;
-                         default:
-                             JOptionPane.showMessageDialog(null, "No has seleccionado ninguna opción");
-                             break;
-                     }
-                 }
-             });
-         }*/
     public Patalla_Admin(Conexion conn) {
         this.conexion = conn;
         this.repuesto = new Repuesto();
@@ -109,7 +62,7 @@ public class Patalla_Admin {
                         break;
                 }
 
-                // Aquí debes tener un JTable previamente creado en tu interfaz
+
                 table1.setModel(modelo_stock);
             }
         });
@@ -120,21 +73,20 @@ public class Patalla_Admin {
                     JOptionPane.showMessageDialog(pantalla, "Por favor, ingrese todos los datos");
                     return;
                 }
-                try{
+                try {
                     repuesto.setNombre(ingreso_producto.getText());
                     repuesto.setStock(Integer.parseInt(ingreso_stock.getText()));
                     repuesto.setPrecio(Double.parseDouble(ingreso_precio.getText()));
-                    if (repuesto.registroCompleto()){
+                    if (repuesto.registroCompleto()) {
                         String ConsultaSQL = "INSERT INTO Repuestos (nombre_pieza, stock, precio, imagen) VALUES (?, ?, ?, ?)";
                         int realizado = conexion.InsercionExplicita(ConsultaSQL, repuesto.getDatos());
-                        if (realizado > 0){
+                        if (realizado > 0) {
                             JOptionPane.showMessageDialog(pantalla, "Registro insertado correctamente", "Acción Exitosa", JOptionPane.INFORMATION_MESSAGE);
-                        }
-                        else if (realizado == 0){
+                        } else if (realizado == 0) {
                             JOptionPane.showMessageDialog(pantalla, "No se inserto el registro", "Error en la inserción", JOptionPane.ERROR_MESSAGE);
                         }
                     }
-                } catch (Exception ex){
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(pantalla, "Error en la entrada de datos");
                 }
 
@@ -145,7 +97,7 @@ public class Patalla_Admin {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser archivo = new JFileChooser();
                 int ventana = archivo.showOpenDialog(null);
-                if (ventana == JFileChooser.APPROVE_OPTION){
+                if (ventana == JFileChooser.APPROVE_OPTION) {
                     File archivoImagen = archivo.getSelectedFile();
                     JFrame imgs = new JFrame("Visor de imagenes");
                     imgs.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -159,5 +111,130 @@ public class Patalla_Admin {
 
             }
         });
+        salirButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pantalla.add(salirButton1);
+                pantalla.setLayout(null);
+                pantalla.setVisible(true);
+
+            }
+        });
+        accederButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String opcionSeleccionada2 = (String) comboBox2.getSelectedItem();
+                DefaultTableModel cajero_venta = new DefaultTableModel();
+                cajero_venta.addColumn("Producto");
+                cajero_venta.addColumn("Estado");
+
+                switch (opcionSeleccionada2) {
+                    case "Cajero 1":
+                    case "Cajero 2":
+                    case "Cajero 3":
+                    case "Cajero 4":
+                    case "Cajero 5":
+                        Object[] rowData = {opcionSeleccionada2, "Sus ventas son"};
+                        cajero_venta.addRow(rowData);
+                        break;
+                    default:
+                        Object[] defaultRowData = {opcionSeleccionada2, "No has seleccionado ninguna opción"};
+                        cajero_venta.addRow(defaultRowData);
+                        break;
+                }
+
+
+                table2.setModel(cajero_venta);
+            }
+        });
+
+        agregarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                       JFrame frame = new JFrame("Agregar Persona");
+                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        frame.setSize(300, 200);
+
+                        /*JLabel nombreLabel = new JLabel("Nombre:");
+                        nombreLabel.setBounds(10, 10, 100, 30);
+                        JTextField nombreTextField = new JTextField(20);
+                        nombreTextField.setBounds(100, 10, 150, 30);
+
+                        JLabel apellidoLabel = new JLabel("Apellido:");
+                        apellidoLabel.setBounds(10, 50, 100, 30);
+                        JTextField apellidoTextField = new JTextField(20);
+                        apellidoTextField.setBounds(100, 50, 150, 30);
+
+                        JLabel cedulaLabel = new JLabel("Cédula de Identidad:");
+                        cedulaLabel.setBounds(10, 90, 150, 30);
+                        JTextField cedulaTextField = new JTextField(20);
+                        cedulaTextField.setBounds(100, 90, 150, 30);
+
+                        JLabel correoLabel = new JLabel("Correo Electrónico:");
+                        correoLabel.setBounds(10, 130, 150, 30);
+                        JTextField correoTextField = new JTextField(20);
+                        correoTextField.setBounds(100, 130, 150, 30);
+
+                        JLabel usuarioLabel = new JLabel("Usuario:");
+                        usuarioLabel.setBounds(10, 170, 150, 30);
+                        JTextField usuarioTextField = new JTextField(20);
+                        usuarioTextField.setBounds(100, 170, 150, 30);
+
+                        JLabel contraseñaLabel = new JLabel("Contraseña:");
+                        contraseñaLabel.setBounds(10, 210, 150, 30);
+                        JPasswordField contraseñaTextField = new JPasswordField(20);
+                        contraseñaTextField.setBounds(100, 210, 150, 30);
+
+                        JButton agregarButton = new JButton("Agregar");
+                        agregarButton.setBounds(100, 250, 100, 30);
+                        agregarButton.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                String nombre = nombreTextField.getText();
+                                String apellido = apellidoTextField.getText();
+                                String cedula = cedulaTextField.getText();
+                                String correo = correoTextField.getText();
+                                String usuario = usuarioTextField.getText();
+                                String contraseña = new String(contraseñaTextField.getPassword());
+
+                                Persona persona = new Persona(nombre, apellido, cedula, correo, usuario, contraseña);
+                                List<Persona> personas = new ArrayList<>();
+                                personas.add(persona);
+
+                                JOptionPane.showMessageDialog(null, "Persona agregada con éxito!");
+                            }
+                        });*/
+
+                        frame.add(nombre);
+                        frame.add(cedula);
+                        frame.add(correo);
+                        frame.add(usuario);
+                        frame.add(passwordField1);
+                        frame.setLayout(null);
+                        frame.setVisible(true);
+                    }
+
+                   /* public static class Persona {
+                        private String nombre;
+                        private String apellido;
+                        private String cedula;
+                        private String correo;
+                        private String usuario;
+                        private String contraseña;
+
+                        public Persona(String nombre, String apellido, String cedula, String correo, String usuario, String contraseña) {
+                            this.nombre = nombre;
+                            this.apellido = apellido;
+                            this.cedula = cedula;
+                            this.correo = correo;
+                            this.usuario = usuario;
+                            this.contraseña = contraseña;
+                        }
+                    }*/
+
+
+
+
+
+        });
     }
-    }
+}
