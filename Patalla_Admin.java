@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class Patalla_Admin {
     private JTabbedPane tabbedPane1;
@@ -21,14 +22,14 @@ public class Patalla_Admin {
     private JTextField textField2;
     private JTextField textField3;
     private JTextField textField5;
-    private JTabbedPane tabbedPane2;
-    private JComboBox comboBox3;
-    private JTextField textField4;
-    private JTextField textField6;
-    private JTextField textField7;
-    private JButton insertarImagenButton;
-    private JButton seleccionarArchivoButton;
     private JButton salirButton2;
+    private JTextField ingreso_producto;
+    private JTextField ingreso_stock;
+    private JTextField ingreso_precio;
+    private JButton seleccionarUnaImagenButton;
+    private JButton insertarPorductoButton;
+    private Repuesto repuesto;
+    private Conexion conexion;
 
 
     /* public Patalla_Admin() {
@@ -77,7 +78,9 @@ public class Patalla_Admin {
                  }
              });
          }*/
-    public Patalla_Admin() {
+    public Patalla_Admin(Conexion conn) {
+        this.conexion = conn;
+        this.repuesto = new Repuesto();
         comprobarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,6 +111,52 @@ public class Patalla_Admin {
 
                 // Aquí debes tener un JTable previamente creado en tu interfaz
                 table1.setModel(modelo_stock);
+            }
+        });
+        insertarPorductoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (ingreso_producto.getText().isEmpty() || ingreso_stock.getText().isEmpty() || ingreso_precio.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(pantalla, "Por favor, ingrese todos los datos");
+                    return;
+                }
+                try{
+                    repuesto.setNombre(ingreso_producto.getText());
+                    repuesto.setStock(Integer.parseInt(ingreso_stock.getText()));
+                    repuesto.setPrecio(Double.parseDouble(ingreso_precio.getText()));
+                    if (repuesto.registroCompleto()){
+                        String ConsultaSQL = "INSERT INTO Repuestos (nombre_pieza, stock, precio, imagen) VALUES (?, ?, ?, ?)";
+                        int realizado = conexion.InsercionExplicita(ConsultaSQL, repuesto.getDatos());
+                        if (realizado > 0){
+                            JOptionPane.showMessageDialog(pantalla, "Registro insertado correctamente", "Acción Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        else if (realizado == 0){
+                            JOptionPane.showMessageDialog(pantalla, "No se inserto el registro", "Error en la inserción", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                } catch (Exception ex){
+                    JOptionPane.showMessageDialog(pantalla, "Error en la entrada de datos");
+                }
+
+            }
+        });
+        seleccionarUnaImagenButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser archivo = new JFileChooser();
+                int ventana = archivo.showOpenDialog(null);
+                if (ventana == JFileChooser.APPROVE_OPTION){
+                    File archivoImagen = archivo.getSelectedFile();
+                    JFrame imgs = new JFrame("Visor de imagenes");
+                    imgs.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    imgs.setSize(400, 400);
+                    imgs.setContentPane(new VisorImagenes(archivoImagen, repuesto).Visor);
+                    imgs.pack();
+                    imgs.setLocationRelativeTo(null); // Centrar la ventana
+                    imgs.setResizable(false);
+                    imgs.setVisible(true);
+                }
+
             }
         });
     }

@@ -41,19 +41,15 @@ public class Pantalla_Cajero {
     private JButton boton_cancelar;
     private JFormattedTextField Formato_fecha;
     private JLabel Imagen_producto;
-    private JButton eliminarProductoButton;
-    private JTable Tabla1;
-    private JButton agregarButton;
     private Conexion conexion;
-    private DefaultTableModel modeloTabla1;
 
     //Constructor de la clase con parametros para el paso de valores de la clase LOGIN
     //y la clase Conexion
 
     public Pantalla_Cajero(Conexion info, String usuario) {
         final double[] precio_pieza = new double[1];
-        DefaultTableModel modelo = new DefaultTableModel(); // Crearun modelo para la tabla
-        DefaultTableModel Stock_modelo = new DefaultTableModel(); // Crearun modelo para la tabla
+        DefaultTableModel modelo = new DefaultTableModel(); // Crear un modelo para la tabla
+        DefaultTableModel Stock_modelo = new DefaultTableModel(); // Crear un modelo para la tabla
         this.conexion = info; //Guardar el valor de info en la variable conexion
         // Ejecutar una consulta sql para obtener el codigo unico y el nombre del vendedor
         String query = "select codigo_unico, usuario from Usuarios WHERE usuario='%s'".formatted(usuario);
@@ -115,15 +111,15 @@ public class Pantalla_Cajero {
                             JOptionPane.showMessageDialog(null,"Error al realizar el registro");
                         }
                         if (procesar_compra){
-                            ResultSet resultado = conexion.Consulta("SELECT id FROM Repuestos WHERE nombre_pieza='"+producto+"'");
+                            ResultSet resultado = conexion.Consulta("SELECT nombre_pieza FROM Repuestos WHERE nombre_pieza='"+producto+"'");
                             int id=0;
                             while (resultado.next()){
-                                id=resultado.getInt("id");
+                                id=resultado.getInt("nombre_pieza");
                             }
                             int columnas_afectadas = conexion.Insertar("INSERT INTO Ventas (cliente, producto, cantidad, precio_unitario, total, responsable) VALUES ('"+cedula+"','"+producto+"','"+cantidad+"','"+precio_pieza[0]+"','"+valor_a_pagar+"','"+codigo_vendedor+"')");
                             if (columnas_afectadas>0){
                                 //actualizar el stock del producto
-                                conexion.Insertar("UPDATE Repuestos SET stock=stock-"+cantidad+" WHERE id="+id);
+                                conexion.Insertar("UPDATE Repuestos SET stock=stock-"+cantidad+" WHERE nombre_pieza="+id);
                                 JOptionPane.showMessageDialog(null,"Compra realizada con EXITO");
                             }
                             else {
@@ -310,7 +306,7 @@ public class Pantalla_Cajero {
                     resultado = conexion.Consulta("SELECT * FROM Repuestos");
                 }
                 else {
-                    resultado = conexion.Consulta("SELECT * FROM Repuestos WHERE id='" + id_producto + "'");
+                    resultado = conexion.Consulta("SELECT * FROM Repuestos WHERE nombre_pieza='" + id_producto + "'");
                 }
                 try {
                     // Obtener metadatos de la consulta para configurar las columnas de la tabla
@@ -336,59 +332,7 @@ public class Pantalla_Cajero {
                 }
             }
         });
-        modeloTabla1 = new DefaultTableModel(new Object[]{"Producto", "Cantidad", "Precio Unitario", "Total"}, 0);
-
-        agregarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Boton agregar clickeado");
-                String producto=String.valueOf(ingreso_producto.getSelectedItem());
-                int cantidad=(int) ingreso_cantidad.getValue();
-                double precioUnitario=precio_pieza[0];//Obtiene el precio del producto
-                double totalProducto=precioUnitario*cantidad;
-                modeloTabla1.addRow(new Object[]{producto, cantidad, precioUnitario, totalProducto});
-
-                double totalActual=calcularTotalTabla(modeloTabla1);
-                System.out.println("Total actual en la tabla" +totalActual);
-
-                modeloTabla1.fireTableDataChanged();
-
-
-            }
-        });
-        eliminarProductoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int filaSeleccionada=Tabla1.getSelectedRow();
-
-                if (filaSeleccionada!=-1){
-                    String producto=(String) modeloTabla1.getValueAt(filaSeleccionada, 0);
-                    int cantidad=(int) modeloTabla1.getValueAt(filaSeleccionada, 1);
-                    double totalProducto=(double) modeloTabla1.getValueAt(filaSeleccionada, 3);
-
-                    double totalActual=calcularTotalTabla(modeloTabla1)-totalProducto;
-
-                    modeloTabla1.removeRow(filaSeleccionada);
-
-                }
-
-
-            }
-        });
-
     }
-    private double calcularTotalTabla(DefaultTableModel modelo) {
-        double total = 0.0;
-        for (int i = 0; i < modelo.getRowCount(); i++) {
-            if (modelo.getColumnCount() >= 4) {
-                total += (double) modelo.getValueAt(i, 3);
-            } else {
-                System.err.println("La tabla no tiene suficientes columnas.");
-            }
-        }
-        return total;
-    }
-
 
     private static boolean VerificarNumeros(String cadena){
         for (char letra : cadena.toCharArray()) {
