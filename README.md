@@ -52,6 +52,7 @@ b)Para elegir la cantidad se uso un
   ![image](https://github.com/Alejo-P/Proyecto-final-POO/assets/150805766/185f6713-fbf2-4b5c-b764-4db0f63cccb2)
 
 * Una vez ingresado todops los datos la factura se generara y guardara automaticamente.
+  ![image](https://github.com/Alejo-P/Proyecto-final-POO/assets/150805766/0959a343-650c-4ec9-9ef1-b8e6d9397c2a)
   ![image](https://github.com/Alejo-P/Proyecto-final-POO/assets/150805766/0676719b-471e-42b2-a716-1fd55366ea1f)
   ![image](https://github.com/Alejo-P/Proyecto-final-POO/assets/150805766/f2e04588-256d-487a-a696-f077ae7960d1)
   ![image](https://github.com/Alejo-P/Proyecto-final-POO/assets/150805766/db977c18-617c-4401-91c2-884e7ede7bdb)
