@@ -112,14 +112,14 @@ public class Pantalla_Cajero {
                         }
                         if (procesar_compra){
                             ResultSet resultado = conexion.Consulta("SELECT nombre_pieza FROM Repuestos WHERE nombre_pieza='"+producto+"'");
-                            int id=0;
+                            String id=null;
                             while (resultado.next()){
-                                id=resultado.getInt("nombre_pieza");
+                                id=resultado.getString("nombre_pieza");
                             }
                             int columnas_afectadas = conexion.Insertar("INSERT INTO Ventas (cliente, producto, cantidad, precio_unitario, total, responsable) VALUES ('"+cedula+"','"+producto+"','"+cantidad+"','"+precio_pieza[0]+"','"+valor_a_pagar+"','"+codigo_vendedor+"')");
                             if (columnas_afectadas>0){
                                 //actualizar el stock del producto
-                                conexion.Insertar("UPDATE Repuestos SET stock=stock-"+cantidad+" WHERE nombre_pieza="+id);
+                                conexion.Insertar("UPDATE Repuestos SET stock=stock-"+cantidad+" WHERE nombre_pieza= '"+id+"'");
                                 JOptionPane.showMessageDialog(null,"Compra realizada con EXITO");
                             }
                             else {
@@ -128,7 +128,7 @@ public class Pantalla_Cajero {
                         }
                     }
                 }catch (Exception ex){
-                    System.out.println(ex);
+                    ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Error en los datos");
                 }
 
