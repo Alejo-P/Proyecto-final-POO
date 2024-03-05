@@ -44,6 +44,24 @@ Tema: Sistema de gestión de para una Tienda Automotriz
     ![image](https://github.com/Alejo-P/Proyecto-final-POO/assets/133398724/09c104d2-38ec-4bf1-acc1-de7c10d74197)
 13) La impresion de la factura se procesa y se lo encuentra en la carpeta señalada
    ![image](https://github.com/Alejo-P/Proyecto-final-POO/assets/133398724/57a09a7d-4872-4c53-b78f-0c3347368b5b)
+14) Una vez teniendo acceso de la pantalla de inicio
+   [![Imagen1.png](https://i.postimg.cc/KzS3q128/Imagen1.png)](https://postimg.cc/8F4CsPc2)
+
+15)Accedemos a la pantalla de administrador, donde podemos seleccionar una de las ventanas
+   [![Imagen2.png](https://i.postimg.cc/QNnjkHrL/Imagen2.png)](https://postimg.cc/V5nyzs64)
+
+16)Para la ventana de Productos en Stock se puede seleccionar diversos productos, adicional la impresion del mismo sera en una JTable
+   [![Imagen3.png](https://i.postimg.cc/x8z2s3KX/Imagen3.png)](https://postimg.cc/tnpwJPvb)
+   [![Imagen4.png](https://i.postimg.cc/PfpvsGyw/Imagen4.png)](https://postimg.cc/c6WLwbVx)
+
+17) Para la pestaña de visualizar cajero podemos escoger  uno de las opciones dadas y con la misma porder visualizar las ventas realizadas
+   [![Imagen5.png](https://i.postimg.cc/XqGHSV7J/Imagen5.png)](https://postimg.cc/7J4MSrz8)
+
+18) Para la pestaña de agregar cajero el Administrador podra ingresar un nuevo cajero con los datos solicitados
+   [![Imagen6.png](https://i.postimg.cc/JhdJZjMy/Imagen6.png)](https://postimg.cc/R3KNz639)
+
+19) Para la pestaña de agrgar producto el Administrador podra añadir nuevos productos a la lista de la mano de una imagen
+   [![Imagen8.png](https://i.postimg.cc/yN5gkByc/Imagen8.png)](https://postimg.cc/KKPvH6V8)
 
 
 
