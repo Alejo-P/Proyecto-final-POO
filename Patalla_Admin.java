@@ -3,6 +3,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,106 +71,126 @@ public class Patalla_Admin {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                try{
 
-                    String producto = ingreso_producto.getText();
-                    int numero_stock = Integer.parseInt(ingreso_stock.getText());
-                    double precio = Double.parseDouble(ingreso_precio.getText());
+                String dbURL = "jdbc:mysql://uuaswpmfddjijnsj:P0iihEDAEoSCjcNLblwX@bx96efbqmpafypdnsonx-mysql.services.clever-cloud.com:3306/bx96efbqmpafypdnsonx";
+                String dbUserName = "uuaswpmfddjijnsj";
+                String dbpassword = "P0iihEDAEoSCjcNLblwX";
 
-                    if (producto.isEmpty() || ingreso_stock.getText().isEmpty() || ingreso_precio.getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(pantalla, "Por favor, ingrese todos los datos");
-                    }
-                    else {
-                        try {
-                            repuesto.setNombre(producto);
-                            repuesto.setStock(numero_stock);
-                            repuesto.setPrecio(precio);
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection connection = DriverManager.getConnection(dbURL,dbUserName,dbpassword);
+                    Statement statement = connection.createStatement();
+                    ResultSet resultado = statement.executeQuery("SELECT * FROM Repuestos");
 
-                            if (repuesto.registroCompleto()) {
-                                String ConsultaSQL = "INSERT INTO Repuestos (nombre_pieza, stock, precio, imagen) VALUES (?, ?, ?, ?)";
-                                int realizado = conexion.InsercionExplicita(ConsultaSQL, repuesto.getDatos());
+                    while (resultado.next()) {
 
-                                if (realizado > 0) {
-                                    JOptionPane.showMessageDialog(pantalla, "Registro insertado correctamente", "Acción Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                        String produ="";
+                        produ = resultado.getString("nombre_pieza");
 
-                                } else if (realizado == 0) {
-                                    JOptionPane.showMessageDialog(pantalla, "No se inserto el registro", "Error en la inserción", JOptionPane.ERROR_MESSAGE);
+                        if (ingreso_producto.getText().equals(produ)) {
+                            JOptionPane.showMessageDialog(null, "pieza ya registrada, ingresa otra");
+                            break;
 
+                        } else {
+
+                            if (ingreso_producto.getText().isEmpty() || ingreso_stock.getText().isEmpty() || ingreso_precio.getText().isEmpty()) {
+                                JOptionPane.showMessageDialog(pantalla, "Por favor, ingrese todos los datos");
+                                break;
+
+                            } else {
+
+                                String producto = ingreso_producto.getText();
+                                float precio = (float) Double.parseDouble(ingreso_precio.getText());
+                                int numero_stock = Integer.parseInt(ingreso_stock.getText());
+
+                                repuesto.setNombre(producto);
+                                repuesto.setStock(numero_stock);
+                                repuesto.setPrecio(precio);
+
+                                if (repuesto.registroCompleto()) {
+                                    String ConsultaSQL = "INSERT INTO Repuestos (nombre_pieza, stock, precio, imagen) VALUES (?, ?, ?, ?)";
+                                    int realizado = conexion.InsercionExplicita(ConsultaSQL, repuesto.getDatos());
+
+                                    if (realizado > 0) {
+                                        JOptionPane.showMessageDialog(pantalla, "Registro insertado correctamente", "Acción Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+                                    } else if (realizado == 0) {
+                                        JOptionPane.showMessageDialog(pantalla, "No se inserto el registro", "Error en la inserción", JOptionPane.ERROR_MESSAGE);
+                                    }
                                 }
                             }
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(pantalla, "Error en la entrada de datos");
+                        }
+                    }
+                    resultado.close();
+                    statement.close();
+                    connection.close();
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+
+                }
+
+
+                seleccionarUnaImagenButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JFileChooser archivo = new JFileChooser();
+                        int ventana = archivo.showOpenDialog(null);
+                        if (ventana == JFileChooser.APPROVE_OPTION) {
+                            File archivoImagen = archivo.getSelectedFile();
+                            JFrame imgs = new JFrame("Visor de imagenes");
+                            imgs.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                            imgs.setSize(400, 400);
+                            imgs.setContentPane(new VisorImagenes(archivoImagen, repuesto).Visor);
+                            imgs.pack();
+                            imgs.setLocationRelativeTo(null); // Centrar la ventana
+                            imgs.setResizable(false);
+                            imgs.setVisible(true);
                         }
 
                     }
+                });
+                salirButton1.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        pantalla.add(salirButton1);
+                        pantalla.setLayout(null);
+                        pantalla.setVisible(true);
 
-                }catch (Exception ex){
-                    JOptionPane.showMessageDialog(null, "Error en ingreso de algun dato..");
-                    System.out.println(ex);
-                }
+                    }
+                });
+                accederButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String opcionSeleccionada2 = (String) comboBox2.getSelectedItem();
+                        DefaultTableModel cajero_venta = new DefaultTableModel();
+                        cajero_venta.addColumn("Producto");
+                        cajero_venta.addColumn("Estado");
 
-            }
-        });
-        seleccionarUnaImagenButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser archivo = new JFileChooser();
-                int ventana = archivo.showOpenDialog(null);
-                if (ventana == JFileChooser.APPROVE_OPTION) {
-                    File archivoImagen = archivo.getSelectedFile();
-                    JFrame imgs = new JFrame("Visor de imagenes");
-                    imgs.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    imgs.setSize(400, 400);
-                    imgs.setContentPane(new VisorImagenes(archivoImagen, repuesto).Visor);
-                    imgs.pack();
-                    imgs.setLocationRelativeTo(null); // Centrar la ventana
-                    imgs.setResizable(false);
-                    imgs.setVisible(true);
-                }
-
-            }
-        });
-        salirButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pantalla.add(salirButton1);
-                pantalla.setLayout(null);
-                pantalla.setVisible(true);
-
-            }
-        });
-        accederButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String opcionSeleccionada2 = (String) comboBox2.getSelectedItem();
-                DefaultTableModel cajero_venta = new DefaultTableModel();
-                cajero_venta.addColumn("Producto");
-                cajero_venta.addColumn("Estado");
-
-                switch (opcionSeleccionada2) {
-                    case "Cajero 1":
-                    case "Cajero 2":
-                    case "Cajero 3":
-                    case "Cajero 4":
-                    case "Cajero 5":
-                        Object[] rowData = {opcionSeleccionada2, "Sus ventas son"};
-                        cajero_venta.addRow(rowData);
-                        break;
-                    default:
-                        Object[] defaultRowData = {opcionSeleccionada2, "No has seleccionado ninguna opción"};
-                        cajero_venta.addRow(defaultRowData);
-                        break;
-                }
+                        switch (opcionSeleccionada2) {
+                            case "Cajero 1":
+                            case "Cajero 2":
+                            case "Cajero 3":
+                            case "Cajero 4":
+                            case "Cajero 5":
+                                Object[] rowData = {opcionSeleccionada2, "Sus ventas son"};
+                                cajero_venta.addRow(rowData);
+                                break;
+                            default:
+                                Object[] defaultRowData = {opcionSeleccionada2, "No has seleccionado ninguna opción"};
+                                cajero_venta.addRow(defaultRowData);
+                                break;
+                        }
 
 
-                table2.setModel(cajero_venta);
-            }
-        });
+                        table2.setModel(cajero_venta);
+                    }
+                });
 
-        agregarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                       JFrame frame = new JFrame("Agregar Persona");
+                agregarButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JFrame frame = new JFrame("Agregar Persona");
                         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         frame.setSize(300, 200);
 
@@ -249,14 +270,16 @@ public class Patalla_Admin {
                         }
                     }*/
 
-        });
-        salirButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                LOGIN.frame_2.dispose();
-                JOptionPane.showMessageDialog(null, "Adios!!");
+                });
+                salirButton1.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        LOGIN.frame_2.dispose();
+                        JOptionPane.showMessageDialog(null, "Adios!!");
+                    }
+                });
+
             }
         });
-
     }
 }
