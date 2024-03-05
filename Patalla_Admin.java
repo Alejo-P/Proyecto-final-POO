@@ -171,86 +171,51 @@ public class Patalla_Admin {
         agregarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Agregar Persona");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(300, 200);
-
-                        /*JLabel nombreLabel = new JLabel("Nombre:");
-                        nombreLabel.setBounds(10, 10, 100, 30);
-                        JTextField nombreTextField = new JTextField(20);
-                        nombreTextField.setBounds(100, 10, 150, 30);
-
-                        JLabel apellidoLabel = new JLabel("Apellido:");
-                        apellidoLabel.setBounds(10, 50, 100, 30);
-                        JTextField apellidoTextField = new JTextField(20);
-                        apellidoTextField.setBounds(100, 50, 150, 30);
-
-                        JLabel cedulaLabel = new JLabel("Cédula de Identidad:");
-                        cedulaLabel.setBounds(10, 90, 150, 30);
-                        JTextField cedulaTextField = new JTextField(20);
-                        cedulaTextField.setBounds(100, 90, 150, 30);
-
-                        JLabel correoLabel = new JLabel("Correo Electrónico:");
-                        correoLabel.setBounds(10, 130, 150, 30);
-                        JTextField correoTextField = new JTextField(20);
-                        correoTextField.setBounds(100, 130, 150, 30);
-
-                        JLabel usuarioLabel = new JLabel("Usuario:");
-                        usuarioLabel.setBounds(10, 170, 150, 30);
-                        JTextField usuarioTextField = new JTextField(20);
-                        usuarioTextField.setBounds(100, 170, 150, 30);
-
-                        JLabel contraseñaLabel = new JLabel("Contraseña:");
-                        contraseñaLabel.setBounds(10, 210, 150, 30);
-                        JPasswordField contraseñaTextField = new JPasswordField(20);
-                        contraseñaTextField.setBounds(100, 210, 150, 30);
-
-                        JButton agregarButton = new JButton("Agregar");
-                        agregarButton.setBounds(100, 250, 100, 30);
-                        agregarButton.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                String nombre = nombreTextField.getText();
-                                String apellido = apellidoTextField.getText();
-                                String cedula = cedulaTextField.getText();
-                                String correo = correoTextField.getText();
-                                String usuario = usuarioTextField.getText();
-                                String contraseña = new String(contraseñaTextField.getPassword());
-
-                                Persona persona = new Persona(nombre, apellido, cedula, correo, usuario, contraseña);
-                                List<Persona> personas = new ArrayList<>();
-                                personas.add(persona);
-
-                                JOptionPane.showMessageDialog(null, "Persona agregada con éxito!");
+                if (nombre.getText().isEmpty() || cedula.getText().length()!=10 || correo.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(pantalla, "Por favor, ingrese todos los datos");
+                    return;
+                }
+                if (!new String(passwordField1.getPassword()).equals(new String(passwordField2.getPassword()))){
+                    JOptionPane.showMessageDialog(pantalla, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                try {
+                    String nombreUsuario = nombre.getText();
+                    String cedulaUsuario = cedula.getText();
+                    String correoUsuario = correo.getText();
+                    String contrasenia = new String(passwordField2.getPassword());
+                    String tipoUsuario = "Cajero";
+                    String ConsultaSQL = "INSERT INTO Usuarios (Usuario, Contrasena, `Tipo usuario`, codigo_unico, Correo) VALUES (?, ?, ?, ?, ?)";
+                    ArrayList<Object> elementos = new ArrayList<>();
+                    elementos.add(nombreUsuario);
+                    elementos.add(contrasenia);
+                    elementos.add(tipoUsuario);
+                    elementos.add(Integer.parseInt(cedulaUsuario));
+                    elementos.add(correoUsuario);
+                    int realizado = conexion.InsercionExplicita(ConsultaSQL, elementos);
+                    if (realizado > 0) {
+                        JOptionPane.showMessageDialog(pantalla, "Registro insertado correctamente", "Acción Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                    } else if (realizado == 0) {
+                        JOptionPane.showMessageDialog(pantalla, "No se inserto el registro", "Error en la inserción", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        int opcion = JOptionPane.showConfirmDialog(pantalla, "Desea actualizar el usuario", "Usuario ya registrado", JOptionPane.YES_NO_OPTION);
+                        if (opcion == JOptionPane.YES_OPTION) {
+                            ConsultaSQL = "UPDATE Usuarios SET Contrasena = ?, `Tipo usuario` = ?, Usuario = ?, Correo = ? WHERE codigo_unico = ?";
+                            elementos.add(nombreUsuario);
+                            realizado = conexion.InsercionExplicita(ConsultaSQL, elementos);
+                            if (realizado > 0) {
+                                JOptionPane.showMessageDialog(pantalla, "Registro actualizado correctamente", "Acción Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                            } else if (realizado == 0) {
+                                JOptionPane.showMessageDialog(pantalla, "No se actualizo el registro", "Error en la actualización", JOptionPane.ERROR_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(pantalla, "Error en la actualización del registro", "Error", JOptionPane.ERROR_MESSAGE);
                             }
-                        });*/
-
-                frame.add(nombre);
-                frame.add(cedula);
-                frame.add(correo);
-                frame.add(usuario);
-                frame.add(passwordField1);
-                frame.setLayout(null);
-                frame.setVisible(true);
-            }
-
-                   /* public static class Persona {
-                        private String nombre;
-                        private String apellido;
-                        private String cedula;
-                        private String correo;
-                        private String usuario;
-                        private String contraseña;
-
-                        public Persona(String nombre, String apellido, String cedula, String correo, String usuario, String contraseña) {
-                            this.nombre = nombre;
-                            this.apellido = apellido;
-                            this.cedula = cedula;
-                            this.correo = correo;
-                            this.usuario = usuario;
-                            this.contraseña = contraseña;
                         }
-                    }*/
-
+                    }
+                }catch (Exception ex){
+                    JOptionPane.showMessageDialog(pantalla, "Error en la entrada de datos");
+                }
+            }
         });
         salirButton1.addActionListener(new ActionListener() {
             @Override
