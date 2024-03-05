@@ -1,3 +1,5 @@
+INTEGRANTES: Bernal Mateo, Chaluisa Silvia, Erazo Emilio, Pinzon Marcelo </b>
+
 Tema: Sistema de gestión de para una Tienda Automotriz
 1) La distribucion de las carpetas y pantallas se las distribuye de la siguiente manera:
    ![image](https://github.com/Alejo-P/Proyecto-final-POO/assets/133398724/b509a1e5-1800-4319-af0e-06e36d25bb33)
