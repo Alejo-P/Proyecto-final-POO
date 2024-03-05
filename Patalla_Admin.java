@@ -69,25 +69,43 @@ public class Patalla_Admin {
         insertarPorductoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (ingreso_producto.getText().isEmpty() || ingreso_stock.getText().isEmpty() || ingreso_precio.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(pantalla, "Por favor, ingrese todos los datos");
-                    return;
-                }
-                try {
-                    repuesto.setNombre(ingreso_producto.getText());
-                    repuesto.setStock(Integer.parseInt(ingreso_stock.getText()));
-                    repuesto.setPrecio(Double.parseDouble(ingreso_precio.getText()));
-                    if (repuesto.registroCompleto()) {
-                        String ConsultaSQL = "INSERT INTO Repuestos (nombre_pieza, stock, precio, imagen) VALUES (?, ?, ?, ?)";
-                        int realizado = conexion.InsercionExplicita(ConsultaSQL, repuesto.getDatos());
-                        if (realizado > 0) {
-                            JOptionPane.showMessageDialog(pantalla, "Registro insertado correctamente", "Acción Exitosa", JOptionPane.INFORMATION_MESSAGE);
-                        } else if (realizado == 0) {
-                            JOptionPane.showMessageDialog(pantalla, "No se inserto el registro", "Error en la inserción", JOptionPane.ERROR_MESSAGE);
-                        }
+
+                try{
+
+                    String producto = ingreso_producto.getText();
+                    int numero_stock = Integer.parseInt(ingreso_stock.getText());
+                    double precio = Double.parseDouble(ingreso_precio.getText());
+
+                    if (producto.isEmpty() || ingreso_stock.getText().isEmpty() || ingreso_precio.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(pantalla, "Por favor, ingrese todos los datos");
                     }
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(pantalla, "Error en la entrada de datos");
+                    else {
+                        try {
+                            repuesto.setNombre(producto);
+                            repuesto.setStock(numero_stock);
+                            repuesto.setPrecio(precio);
+
+                            if (repuesto.registroCompleto()) {
+                                String ConsultaSQL = "INSERT INTO Repuestos (nombre_pieza, stock, precio, imagen) VALUES (?, ?, ?, ?)";
+                                int realizado = conexion.InsercionExplicita(ConsultaSQL, repuesto.getDatos());
+
+                                if (realizado > 0) {
+                                    JOptionPane.showMessageDialog(pantalla, "Registro insertado correctamente", "Acción Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+                                } else if (realizado == 0) {
+                                    JOptionPane.showMessageDialog(pantalla, "No se inserto el registro", "Error en la inserción", JOptionPane.ERROR_MESSAGE);
+
+                                }
+                            }
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(pantalla, "Error en la entrada de datos");
+                        }
+
+                    }
+
+                }catch (Exception ex){
+                    JOptionPane.showMessageDialog(null, "Error en ingreso de algun dato..");
+                    System.out.println(ex);
                 }
 
             }
@@ -239,5 +257,6 @@ public class Patalla_Admin {
                 JOptionPane.showMessageDialog(null, "Adios!!");
             }
         });
+
     }
 }
