@@ -34,10 +34,17 @@ Tema: Sistema de gestión de para una Tienda Automotriz
 9) En caso de no ser llenados los campos del cliente el sistema no permitira procesar la compra
    ![image](https://github.com/Alejo-P/Proyecto-final-POO/assets/133398724/73d1b25b-bead-4c3d-b147-d5ba421ef515)
 
-10) Al llenar correctamente los campos del cliente permite procesar la compra y la impresión de la factura
+10) Para crear la factura se hace uso de la libreia iText, esta nos permite crear diferentes tipos de archivos, en el caso deñ rpoyecto PDFs.
+   ![image](https://github.com/Alejo-P/Proyecto-final-POO/assets/150805766/8a8cd9c3-3c3e-4120-bae7-48c62fa98225)
+
+11) Los PDFs se guardan autoamticamente en la carpeta PDF_generado, con el numero de cedula.
+    ![image](https://github.com/Alejo-P/Proyecto-final-POO/assets/150805766/0c969e02-140a-44c9-afbe-07f2a7b390fb)
+
+12) Al llenar correctamente los campos del cliente permite procesar la compra y la impresión de la factura
     ![image](https://github.com/Alejo-P/Proyecto-final-POO/assets/133398724/09c104d2-38ec-4bf1-acc1-de7c10d74197)
-11) La impresion de la factura se procesa y se lo encuentra en la carpeta señalada
+13) La impresion de la factura se procesa y se lo encuentra en la carpeta señalada
    ![image](https://github.com/Alejo-P/Proyecto-final-POO/assets/133398724/57a09a7d-4872-4c53-b78f-0c3347368b5b)
+
 
 
 
