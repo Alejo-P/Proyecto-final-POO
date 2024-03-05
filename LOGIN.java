@@ -95,8 +95,7 @@ public class LOGIN {
 
                 if (BDD.getCredenciales(textField1.getText(), new String (passwordField1.getPassword()), comboBox1.getSelectedItem().toString())){
                     JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
-                    if (BDD.getTipoUsuario().equals("Cajero"))
-                    {
+                    if (BDD.getTipoUsuario().equals("Cajero")) {
                         frame_2.setContentPane(new Pantalla_Cajero(BDD, textField1.getText()).panel_cajero);
                         frame_2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         frame_2.pack();
@@ -115,13 +114,15 @@ public class LOGIN {
 
                     }
                     else{
-                        //JFrame pantallaAdministrador=new JFrame("Administrador");
-                        frame_2.setContentPane(new Patalla_Admin(BDD).pantalla);
-                        frame_2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        frame_2.pack();
-                        frame_2.setVisible(true);
-                        main.frame.dispose();
+                        Patalla_Admin pantallaAdmin = new Patalla_Admin(BDD);
+                        frame_2.setContentPane(pantallaAdmin.pantalla); // Establece el contenido del JFrame frame_2 como el panel de la pantalla de administrador
+                        frame_2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);// Establece la operación de cierre del JFrame frame_2
+                        frame_2.pack();// Hace que el JFrame frame_2 ajuste automáticamente su tamaño según su contenido
+                        frame_2.setVisible(true);  // Hace visible el JFrame frame_2
+                        main.frame.dispose(); // Cierra el JFrame main.frame (la pantalla de inicio)
+                        centerFrameOnScreen(frame_2); // Centra el JFrame frame_2 en la pantalla llamando al método centerFrameOnScreen
                     }
+
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
@@ -129,4 +130,14 @@ public class LOGIN {
             }
         });
     }
+    //Creación de la instancia de la clase Patalla_Admin
+    private static void centerFrameOnScreen(JFrame frame) {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = frame.getSize().width;
+        int height = frame.getSize().height;
+        int x = (screenSize.width - width) / 2;
+        int y = (screenSize.height - height) / 2;
+        frame.setLocation(x, y);
+    }
+
 }
