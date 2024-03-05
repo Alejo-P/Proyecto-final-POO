@@ -85,6 +85,27 @@ public class Patalla_Admin {
                         else if (realizado == 0){
                             JOptionPane.showMessageDialog(pantalla, "No se inserto el registro", "Error en la inserción", JOptionPane.ERROR_MESSAGE);
                         }
+                        else {
+                            int opcion = JOptionPane.showConfirmDialog(pantalla, "Desea actualizar el producto", "Producto ya registrado", JOptionPane.YES_NO_OPTION);
+                            if (opcion == JOptionPane.YES_OPTION){
+                                ConsultaSQL = "UPDATE Repuestos SET stock = ?, precio = ?, imagen = ? WHERE nombre_pieza = ?";
+                                ArrayList<Object> elementos = new ArrayList<>();
+                                elementos.add(repuesto.getStock());
+                                elementos.add(repuesto.getPrecio());
+                                elementos.add(repuesto.getImagen());
+                                elementos.add(repuesto.getNombre());
+                                realizado = conexion.InsercionExplicita(ConsultaSQL, elementos);
+                                if (realizado > 0){
+                                    JOptionPane.showMessageDialog(pantalla, "Registro actualizado correctamente", "Acción Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                }
+                                else if (realizado == 0){
+                                    JOptionPane.showMessageDialog(pantalla, "No se actualizo el registro", "Error en la actualización", JOptionPane.ERROR_MESSAGE);
+                                }
+                                else {
+                                    JOptionPane.showMessageDialog(pantalla, "Error en la actualización del registro", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
+                        }
                     }
                 } catch (Exception ex){
                     JOptionPane.showMessageDialog(pantalla, "Error en la entrada de datos");
