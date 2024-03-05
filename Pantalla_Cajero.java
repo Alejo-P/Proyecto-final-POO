@@ -186,7 +186,8 @@ public class Pantalla_Cajero {
                 else{
                     // Si la cadena no es nula convierte su valor a double
                     double valor_a_pagar= Double.parseDouble(valor);
-                    FACTURA factura_generada = new FACTURA(codigo_vendedor,nombre_vendedor,cedula,nombre_apellido,direccion,telefono,cantidad,producto,valor_a_pagar);
+                    FACTURA factura_generada = new FACTURA(codigo_vendedor,nombre_vendedor,cedula,
+                            nombre_apellido,direccion,telefono,cantidad,producto,valor_a_pagar);
                     factura_generada.crear_factura();
                     JOptionPane.showMessageDialog(null, "Factura generada con exito");
                 }

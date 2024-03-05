@@ -231,10 +231,13 @@ public class Patalla_Admin {
                         }
                     }*/
 
-
-
-
-
+        });
+        salirButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LOGIN.frame_2.dispose();
+                JOptionPane.showMessageDialog(null, "Adios!!");
+            }
         });
     }
 }
