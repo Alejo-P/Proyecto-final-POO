@@ -2,16 +2,18 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Patalla_Admin {
     private JTabbedPane tabbedPane1;
-    private JComboBox comboBox1;
+    private JComboBox <String> comboBox1;
     private JButton comprobarButton;
-    private JComboBox comboBox2;
+    private JComboBox <String> comboBox2;
     private JButton accederButton;
     private JPasswordField passwordField1;
     private JTextField usuario;
@@ -29,8 +31,10 @@ public class Patalla_Admin {
     private JButton seleccionarUnaImagenButton;
     private JButton insertarPorductoButton;
     private JButton salirButton1;
+    private JButton verProductosButton;
     private Repuesto repuesto;
     private Conexion conexion;
+    private ArrayList<Object> productos;
 
     public Patalla_Admin(Conexion conn) {
         this.conexion = conn;
@@ -39,30 +43,35 @@ public class Patalla_Admin {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String opcionSeleccionada = (String) comboBox1.getSelectedItem();
-                DefaultTableModel modelo_stock = new DefaultTableModel();
-                modelo_stock.addColumn("Producto");
-                modelo_stock.addColumn("Estado");
-
-                switch (opcionSeleccionada) {
-                    case "Disco de Frenos":
-                    case "Pastillas de Frenos":
-                    case "Bujias":
-                    case "Filtro de Aceite":
-                    case "Bomba de Gasolina":
-                    case "Bateria":
-                    case "Aceite de Motor":
-                    case "Refrigerante":
-                    case "Neumaticos":
-                    case "Pedales":
-                        Object[] rowData = {opcionSeleccionada, "Se encuentra en stock"};
-                        modelo_stock.addRow(rowData);
-                        break;
-                    default:
-                        Object[] defaultRowData = {opcionSeleccionada, "No has seleccionado ninguna opción"};
-                        modelo_stock.addRow(defaultRowData);
-                        break;
+                ResultSet respuesta = null;
+                assert opcionSeleccionada != null;
+                if (opcionSeleccionada.equals("Presione para actualizar...")){
+                    JOptionPane.showMessageDialog(pantalla, "Por favor, seleccione un producto");
+                    return;
+                } else if (opcionSeleccionada.equals("Todo")){
+                    respuesta = conexion.Consulta("SELECT nombre_pieza, stock FROM Repuestos");
+                } else {
+                    respuesta = conexion.Consulta("SELECT nombre_pieza, stock FROM Repuestos WHERE nombre_pieza = '" + opcionSeleccionada + "'");
                 }
-                table1.setModel(modelo_stock);
+                ResultSetMetaData meta = null;
+                try {
+                    meta = respuesta.getMetaData();
+                    int columnas = meta.getColumnCount();
+                    DefaultTableModel modelo = new DefaultTableModel();
+                    for (int i = 1; i <= columnas; i++) {
+                        modelo.addColumn(meta.getColumnName(i));
+                    }
+                    while (respuesta.next()) {
+                        Object[] fila = new Object[columnas];
+                        for (int i = 0; i < columnas; i++) {
+                            fila[i] = respuesta.getObject(i + 1);
+                        }
+                        modelo.addRow(fila);
+                    }
+                    table1.setModel(modelo);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         insertarPorductoButton.addActionListener(new ActionListener() {
@@ -104,8 +113,12 @@ public class Patalla_Admin {
                                 else {
                                     JOptionPane.showMessageDialog(pantalla, "Error en la actualización del registro", "Error", JOptionPane.ERROR_MESSAGE);
                                 }
+                            } else {
+                                JOptionPane.showMessageDialog(pantalla, "No se inserto el registro", "Error en la inserción", JOptionPane.ERROR_MESSAGE);
                             }
                         }
+                    } else {
+                        JOptionPane.showMessageDialog(pantalla, "Error en la entrada de datos", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (Exception ex){
                     JOptionPane.showMessageDialog(pantalla, "Error en la entrada de datos");
@@ -132,39 +145,63 @@ public class Patalla_Admin {
 
             }
         });
-        salirButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pantalla.add(salirButton1);
-                pantalla.setLayout(null);
-                pantalla.setVisible(true);
-            }
-        });
         accederButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String opcionSeleccionada2 = (String) comboBox2.getSelectedItem();
-                DefaultTableModel cajero_venta = new DefaultTableModel();
-                cajero_venta.addColumn("Producto");
-                cajero_venta.addColumn("Estado");
-
-                switch (opcionSeleccionada2) {
-                    case "Cajero 1":
-                    case "Cajero 2":
-                    case "Cajero 3":
-                    case "Cajero 4":
-                    case "Cajero 5":
-                        Object[] rowData = {opcionSeleccionada2, "Sus ventas son"};
-                        cajero_venta.addRow(rowData);
-                        break;
-                    default:
-                        Object[] defaultRowData = {opcionSeleccionada2, "No has seleccionado ninguna opción"};
-                        cajero_venta.addRow(defaultRowData);
-                        break;
+                ResultSet datos = null;
+                assert opcionSeleccionada2 != null;
+                if (opcionSeleccionada2.equals("Presione para actualizar..."))
+                {
+                    JOptionPane.showMessageDialog(pantalla, "Por favor, seleccione un usuario");
+                    return;
+                } else if (opcionSeleccionada2.equals("Todo"))
+                {
+                    datos = conexion.Consulta("SELECT\t" +
+                            "c.nombres," +
+                            "v.producto," +
+                            "v.cantidad," +
+                            "v.precio_unitario," +
+                            "v.total," +
+                            "u.Usuario," +
+                            "v.fecha_venta\n" +
+                            "FROM Ventas v\n" +
+                            "JOIN Clientes c ON v.cliente = c.cedula\n" +
+                            "JOIN Usuarios u ON v.Responsable = u.codigo_unico");
+                } else
+                {
+                    datos = conexion.Consulta("SELECT\t" +
+                            "c.nombres," +
+                            "v.producto," +
+                            "v.cantidad," +
+                            "v.precio_unitario," +
+                            "v.total," +
+                            "u.Usuario," +
+                            "v.fecha_venta\n" +
+                            "FROM Ventas v\n" +
+                            "JOIN Clientes c ON v.cliente = c.cedula\n" +
+                            "JOIN Usuarios u ON v.Responsable = u.codigo_unico\n" +
+                            "WHERE u.Usuario ='" + opcionSeleccionada2 + "'");
                 }
-
-
-                table2.setModel(cajero_venta);
+                ResultSetMetaData meta = null;
+                try {
+                    meta = datos.getMetaData();
+                    int columnas = meta.getColumnCount();
+                    DefaultTableModel modelo = new DefaultTableModel();
+                    for (int i = 1; i <= columnas; i++) {
+                        modelo.addColumn(meta.getColumnName(i));
+                    }
+                    while (datos.next()) {
+                        Object[] fila = new Object[columnas];
+                        for (int i = 0; i < columnas; i++) {
+                            fila[i] = datos.getObject(i + 1);
+                        }
+                        modelo.addRow(fila);
+                    }
+                    table2.setModel(modelo);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
@@ -224,5 +261,46 @@ public class Patalla_Admin {
                 JOptionPane.showMessageDialog(null, "Adios!!");
             }
         });
+        verProductosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("Productos");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setContentPane(new VisorProductos(ingreso_producto, conexion).Visor);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            }
+        });
+        comboBox2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                ArrayList<Object> cajeros = conexion.getCajeros();
+                comboBox2.removeAllItems();
+                comboBox2.addItem("Todo");
+                for (Object cajero: cajeros) {
+                    comboBox2.addItem((String) cajero);
+                }
+            }
+        });
+        comboBox1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                productos = conexion.getProductos();
+                comboBox1.removeAllItems();
+                comboBox1.addItem("Todo");
+                for (Object producto: productos) {
+                    comboBox1.addItem((String) producto);
+                }
+            }
+        });
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        comboBox1 = new JComboBox<String>();
+        comboBox2 = new JComboBox<String>();
     }
 }

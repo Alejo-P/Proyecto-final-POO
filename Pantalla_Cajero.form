@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Pantalla_Cajero">
-  <grid id="27dc6" binding="panel_cajero" layout-manager="GridLayoutManager" row-count="7" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="panel_cajero" layout-manager="GridLayoutManager" row-count="6" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="634" height="909"/>
@@ -89,24 +89,12 @@
                   <text value="Teléfono"/>
                 </properties>
               </component>
-              <component id="d69a3" class="javax.swing.JComboBox" binding="ingreso_producto">
+              <component id="d69a3" class="javax.swing.JComboBox" binding="ingreso_producto" custom-create="true">
                 <constraints>
                   <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <model>
-                    <item value="Seleccione uno..."/>
-                    <item value="Disco de Frenos"/>
-                    <item value="Pastillas de Frenos"/>
-                    <item value="Bujias"/>
-                    <item value="Filtro de Aceite"/>
-                    <item value="Bomba de Gasolina"/>
-                    <item value="Bateria"/>
-                    <item value="Aceite de Motor"/>
-                    <item value="Refrigerante"/>
-                    <item value="Neumaticos"/>
-                    <item value="Pedales"/>
-                  </model>
+                  <model/>
                 </properties>
               </component>
               <component id="95ad" class="javax.swing.JLabel">
@@ -216,9 +204,17 @@
                   <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                 </constraints>
               </vspacer>
+              <component id="8838a" class="javax.swing.JButton" binding="actualizarButton1" default-binding="true">
+                <constraints>
+                  <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Actualizar"/>
+                </properties>
+              </component>
             </children>
           </grid>
-          <grid id="67aee" layout-manager="GridLayoutManager" row-count="7" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="67aee" layout-manager="GridLayoutManager" row-count="6" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="Ver Historial de Transacción"/>
@@ -255,36 +251,12 @@
                   <text value="Lista de transacciones realizadas"/>
                 </properties>
               </component>
-              <component id="12b74" class="javax.swing.JButton" binding="volverButton" default-binding="true">
-                <constraints>
-                  <grid row="6" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Volver"/>
-                </properties>
-              </component>
-              <component id="57fa2" class="javax.swing.JButton" binding="imprimirButton" default-binding="true">
-                <constraints>
-                  <grid row="6" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Imprimir"/>
-                </properties>
-              </component>
               <component id="9774a" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Fecha"/>
-                </properties>
-              </component>
-              <component id="73b7b" class="javax.swing.JButton" binding="seleccionarButton" default-binding="true">
-                <constraints>
-                  <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Seleccionar"/>
                 </properties>
               </component>
               <scrollpane id="d1c58">
@@ -317,7 +289,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="3627f" layout-manager="GridLayoutManager" row-count="7" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="3627f" layout-manager="GridLayoutManager" row-count="6" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <tabbedpane title="Stock"/>
@@ -327,7 +299,7 @@
                 <children>
                   <component id="4df87" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Realizar Busqueda Por"/>
@@ -335,15 +307,15 @@
                   </component>
                   <component id="e36bd" class="javax.swing.JTextField" binding="ID_producto_buscar">
                     <constraints>
-                      <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                   </component>
                   <component id="42ef4" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                        <preferred-size width="160" height="17"/>
+                      </grid>
                     </constraints>
                     <properties>
                       <text value="ID-Producto"/>
@@ -351,7 +323,7 @@
                   </component>
                   <component id="2e942" class="javax.swing.JButton" binding="buscarStockButton">
                     <constraints>
-                      <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Buscar"/>
@@ -359,7 +331,7 @@
                   </component>
                   <component id="b602d" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Lista de Productos en Stock"/>
@@ -367,7 +339,7 @@
                   </component>
                   <scrollpane id="f9943">
                     <constraints>
-                      <grid row="5" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
@@ -378,25 +350,9 @@
                       </component>
                     </children>
                   </scrollpane>
-                  <component id="93912" class="javax.swing.JButton" binding="actualizarButton" default-binding="true">
+                  <vspacer id="bc012">
                     <constraints>
-                      <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Actualizar"/>
-                    </properties>
-                  </component>
-                  <component id="e492b" class="javax.swing.JButton" binding="eliminarButton" default-binding="true">
-                    <constraints>
-                      <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Eliminar"/>
-                    </properties>
-                  </component>
-                  <vspacer id="69601">
-                    <constraints>
-                      <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </vspacer>
                 </children>
@@ -405,14 +361,6 @@
           </tabbedpane>
         </children>
       </tabbedpane>
-      <component id="fec3c" class="javax.swing.JButton" binding="boton_cerrar_sesion">
-        <constraints>
-          <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Cerrar Sesion"/>
-        </properties>
-      </component>
       <hspacer id="fc54c">
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -423,11 +371,6 @@
           <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
       </hspacer>
-      <vspacer id="1d367">
-        <constraints>
-          <grid row="6" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </vspacer>
       <component id="8a181" class="javax.swing.JLabel">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -468,7 +411,7 @@
       </component>
       <component id="5fca3" class="javax.swing.JLabel">
         <constraints>
-          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+          <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="161" height="17"/>
           </grid>
         </constraints>
@@ -494,6 +437,14 @@
           <font size="26" style="3"/>
           <foreground color="-1715242"/>
           <text value="Bienvenid@"/>
+        </properties>
+      </component>
+      <component id="fec3c" class="javax.swing.JButton" binding="boton_cerrar_sesion">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Cerrar Sesion"/>
         </properties>
       </component>
     </children>

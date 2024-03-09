@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 public class Pantalla_Cajero {
     JPanel panel_cajero;
@@ -17,7 +18,6 @@ public class Pantalla_Cajero {
     private JTextField ingreso_cedula;
     private JTextField ingreso_nombre_apellido;
     private JTextField ingreso_valor_a_pagar;
-    private JButton Boton1;
     private JButton boton_confirmacion;
     private JButton boton_factura;
     private JButton boton_cerrar_sesion;
@@ -25,23 +25,20 @@ public class Pantalla_Cajero {
     private JTextField ingreso_vendedor;
     private JTextField ingreso_direccion;
     private JTextField ingreso_telefono;
-    private JComboBox ingreso_producto;
+    private JComboBox <String> ingreso_producto;
     private JSpinner ingreso_cantidad;
     private JButton buscarButton;
     private JTabbedPane tabbedPane1;
-    private JButton volverButton;
-    private JButton imprimirButton;
-    private JButton seleccionarButton;
     private JTable Tabla_info_ventas;
     private JTextField ID_producto_buscar;
     private JButton buscarStockButton;
     private JTable table3;
-    private JButton actualizarButton;
-    private JButton eliminarButton;
     private JButton boton_cancelar;
     private JFormattedTextField Formato_fecha;
     private JLabel Imagen_producto;
+    private JButton actualizarButton1;
     private Conexion conexion;
+    private ArrayList<Object> Repuestos;
 
     //Constructor de la clase con parametros para el paso de valores de la clase LOGIN
     //y la clase Conexion
@@ -54,12 +51,13 @@ public class Pantalla_Cajero {
         // Ejecutar una consulta sql para obtener el codigo unico y el nombre del vendedor
         String query = "select codigo_unico, usuario from Usuarios WHERE usuario='%s'".formatted(usuario);
         ResultSet informacion=conexion.Consulta(query);
-        // Llenar los campos de texto con la informacion obtenida de la consulta
+        // Llenar los campos de texto con la información obtenida de la consulta
         try {
             while (informacion.next()){
                 ingreso_codigo.setText(informacion.getString("codigo_unico"));
                 ingreso_vendedor.setText(informacion.getString("usuario"));
             }
+            informacion.close();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -88,7 +86,7 @@ public class Pantalla_Cajero {
                     } else if (producto.equals("Seleccione el producto...") ||cantidad<=0) {
                         JOptionPane.showMessageDialog(null,"No se ha selecionado ningun producto o cantidad de producto");
                     } else{
-                        //aqui se ingresarian los datos a la base de datos
+                        //aquí se ingresarian los datos a la base de datos
                         //y se mostraria un mensaje de exito
                         int insercion = conexion.Insertar("INSERT INTO Clientes (cedula, nombres, direccion, telefono) VALUES ('"+cedula+"','"+nombre_apellido+"','"+direccion+"','"+telefono+"')");
                         if (insercion<0){
@@ -97,10 +95,10 @@ public class Pantalla_Cajero {
                                 int columnas_afectadas = conexion.Insertar("UPDATE Clientes SET nombres='"+nombre_apellido+"', direccion='"+direccion+"', telefono='"+telefono+"' WHERE cedula='"+cedula+"'");
                                 if (columnas_afectadas>0){
                                     procesar_compra=true;
-                                    JOptionPane.showMessageDialog(null,"Registro actualizado con EXITO");
+                                    JOptionPane.showMessageDialog(panel_cajero,"Registro actualizado con EXITO");
                                 }
                                 else {
-                                    JOptionPane.showMessageDialog(null,"Error al actualizar el registro");
+                                    JOptionPane.showMessageDialog(panel_cajero,"Error al actualizar el registro");
                                 }
                             }
                         }
@@ -125,6 +123,7 @@ public class Pantalla_Cajero {
                             else {
                                 JOptionPane.showMessageDialog(null,"Error al realizar la compra");
                             }
+                            resultado.close();
                         }
                     }
                 }catch (Exception ex){
@@ -137,9 +136,8 @@ public class Pantalla_Cajero {
         boton_cerrar_sesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"Adios!!");
+                JOptionPane.showMessageDialog(panel_cajero,"Adios!!");
                 LOGIN.frame_2.dispose();
-
             }
         });
         boton_cancelar.addActionListener(new ActionListener() {
@@ -158,8 +156,7 @@ public class Pantalla_Cajero {
                 ingreso_cantidad.setValue(0);
                 ingreso_producto.setSelectedItem(valor_combobox);
                 ingreso_valor_a_pagar.setText("");
-                JOptionPane.showMessageDialog(null, "Compra CANCELADA");
-
+                JOptionPane.showMessageDialog(panel_cajero, "Compra CANCELADA");
             }
         });
         boton_factura.addActionListener(new ActionListener() {
@@ -225,9 +222,14 @@ public class Pantalla_Cajero {
                         modelo.addRow(filas);
                     }
                 } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                    ex.printStackTrace();
+                } finally {
+                    try {
+                        resultado.close();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
-
             }
         });
         ingreso_producto.addActionListener(new ActionListener() {
@@ -258,13 +260,10 @@ public class Pantalla_Cajero {
                             Image imagen_redimensionada = imagen.getImage().getScaledInstance(Imagen_producto.getWidth(), Imagen_producto.getHeight(), Image.SCALE_SMOOTH);
                             Imagen_producto.setIcon(new ImageIcon(imagen_redimensionada));
                         }
+                        resultado.close();
                         actualizarRango(0, cantidad, 0, 1);
                         ingreso_cantidad.setEnabled(true);
-
-
-
                         ingreso_valor_a_pagar.setText(String.valueOf(precio_pieza[0] * Integer.parseInt(String.valueOf(ingreso_cantidad.getValue()))));
-
                     }catch (Exception ex){
                         System.out.println(ex);
                     }
@@ -276,16 +275,17 @@ public class Pantalla_Cajero {
             public void stateChanged(ChangeEvent e) {
                 //ESTA PARTE DEL CODIGO TOMA EL PRODUCTO SELECCIONADO Y BUSCA SU PRECIO EN LA BASE DE DATOS
                 //Y LO MUESTRA EN EL CAMPO DE TEXTO
+                ResultSet respuesta;
                 String producto = String.valueOf(ingreso_producto.getSelectedItem());
                 if (producto.equals("Seleccione el producto...")){
                     ingreso_valor_a_pagar.setText("");
                 }
                 else {
                     try {
-                        ResultSet resultado = conexion.Consulta("SELECT precio FROM Repuestos WHERE nombre_pieza='"+producto+"'");
+                        respuesta = conexion.Consulta("SELECT precio FROM Repuestos WHERE nombre_pieza='"+producto+"'");
                         double precio=0;
-                        while (resultado.next()){
-                            precio=resultado.getDouble("precio");
+                        while (respuesta.next()){
+                            precio=respuesta.getDouble("precio");
                         }
                         int cantidad=Integer.parseInt(String.valueOf(ingreso_cantidad.getValue()));
                         String valor = "%.2f".formatted(precio*cantidad);
@@ -311,7 +311,7 @@ public class Pantalla_Cajero {
                 }
                 try {
                     // Obtener metadatos de la consulta para configurar las columnas de la tabla
-                    ResultSetMetaData metaDatos = null;
+                    ResultSetMetaData metaDatos;
                     Stock_modelo.setRowCount(0); // Limpiar la tabla
                     Stock_modelo.setColumnCount(0); // Limpiar la tabla
                     table3.setModel(Stock_modelo); // Asignar el modelo a la tabla
@@ -330,6 +330,24 @@ public class Pantalla_Cajero {
                     }
                 } catch (SQLException ex) {
                     ex.printStackTrace();
+                } finally {
+                    try {
+                        resultado.close();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        actualizarButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Repuestos = conexion.getProductos();
+                ingreso_producto.removeAllItems();
+                ingreso_producto.addItem("Seleccione el producto...");
+                for (Object producto : Repuestos) {
+                    ingreso_producto.addItem((String) producto);
                 }
             }
         });
@@ -341,10 +359,10 @@ public class Pantalla_Cajero {
                 return false; // Si es un espacio en blanco, retornar falso
             }
             if (letra == '-') {
-                continue; // Si es un guión medio "-", saltar a la siguiente iteración del bucle
+                continue; // Sí es un guion medio "-", saltar a la siguiente iteración del bucle
             }
             if (!Character.isDigit(letra)) {
-                return false; // Si no es un dígito y no es un guión medio "-", retornar falso
+                return false; // Si no es un dígito y no es un guion medio "-", retornar falso
             }
         }
         return true;
@@ -356,6 +374,7 @@ public class Pantalla_Cajero {
     }
     private void createUIComponents() throws ParseException {
         // TODO: place custom component creation code here
+        ingreso_producto = new JComboBox<String>();
         //ESTA PARTE DEL CODIGO CREA UN FORMATO PARA EL CAMPO DE TEXTO
         MaskFormatter formato = new MaskFormatter("####-##-##");
         Formato_fecha = new JFormattedTextField(formato);
