@@ -27,7 +27,7 @@ public class VisorImagenes {
                 FileInputStream Imagen = null;
                 try {
                     Imagen = new FileInputStream(ruta);
-                    byte[] imagenBytes= new byte[(int) ruta.length()];
+                    byte[] imagenBytes= Imagen.readAllBytes();
                     Imagen.close();
                     repuesto.setImagen(imagenBytes);
                     JOptionPane.showMessageDialog(Visor, "Imagen cargada y lista para ser insertada en la base de datos", "Acción Exitosa", JOptionPane.INFORMATION_MESSAGE);
